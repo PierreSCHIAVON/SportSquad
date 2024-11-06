@@ -1,34 +1,29 @@
-
 const express = require('express');
 const Sequelize = require('sequelize');
-
-// Importer la configuration Sequelize
-const sequelize = require('./models').sequelize;  // Si tu as configuré Sequelize CLI
-
+const sequelize = require('./models').sequelize;  
 const app = express();
+const userRoutes = require('./routes');
 
-// Middleware pour parser les requêtes JSON
+// Middleware to parse JSON requests
 app.use(express.json());
 
-// Tester la connexion à la base de données
+// Test database connection
 async function testDBConnection() {
   try {
-    await sequelize.authenticate();  // Vérifie la connexion
+    await sequelize.authenticate();
+    await sequelize.sync();
     console.log('Connexion réussie à la base de données PostgreSQL !');
   } catch (error) {
     console.error('Impossible de se connecter à la base de données :', error);
   }
 }
 
-testDBConnection();  // Appelle la fonction pour tester la connexion
+testDBConnection();
 
-// Routes (tu peux en ajouter plus ici)
-app.get('/', (req, res) => {
-  res.send('Serveur Express.js fonctionne !');
-});
+// Use the user routes
+app.use('/', userRoutes);
 
-// Démarrer le serveur
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Serveur démarré sur le port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
