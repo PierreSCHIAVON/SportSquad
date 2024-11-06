@@ -54,4 +54,3 @@ module.exports = (sequelize, DataTypes) => {
   
     return Notes;
 };
-  

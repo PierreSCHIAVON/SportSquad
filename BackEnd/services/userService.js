@@ -17,7 +17,7 @@ const userService = {
             const users = await User.findAll();
             return users;
         } catch (error) {
-            throw new Error(`Erreur lors de la récupération des utilisateurs: ${error.message}`);
+            throw new Error(`Erreur lors de la récupération des utilisateurs: ${error}`);
         }
     },
 
