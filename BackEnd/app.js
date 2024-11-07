@@ -1,11 +1,24 @@
 const express = require('express');
-const Sequelize = require('sequelize');
+const cors = require('cors');
 const sequelize = require('./models').sequelize;  
 const app = express();
 const userRoutes = require('./routes');
 
+const corsOptions = {
+  origin: 'http://localhost:5173/', // URL du front
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204
+};
+
+// Configurer CORS avec les options définies
+app.use(cors(corsOptions));
+
 // Middleware to parse JSON requests
 app.use(express.json());
+
+// Configurer CORS pour autoriser toutes les origines
+app.use(cors());
 
 // Test database connection
 async function testDBConnection() {
