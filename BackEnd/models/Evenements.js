@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    id_users: {
+    id_user: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -47,10 +47,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(50),
       allowNull: false
     }
+  },
+  {
+    tableName: 'Evenements',
+    timestamps: false
   });
 
   Evenement.associate = (models) => {
-    Evenement.belongsTo(models.User, { foreignKey: 'id_users', as: 'organisateur' });
+    Evenement.belongsTo(models.User, { foreignKey: 'id_user', as: 'organisateur' });
   };
 
   return Evenement;

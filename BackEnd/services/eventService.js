@@ -1,10 +1,10 @@
-const { Evenements } = require('../models'); // Importation du modèle User
+const { Evenement } = require('../models'); // Importation du modèle User
 
 const eventService = {
     // CREATE: Créer un nouvel événement
     async createEvent(data) {
         try {
-            const newEvent = await Evenements.create(data);
+            const newEvent = await Evenement.create(data);
             return newEvent;
         } catch (error) {
             throw new Error(`Erreur lors de la création de l'événement: ${error.message}`);
@@ -14,7 +14,7 @@ const eventService = {
     // READ: Récupérer tous les événements
     async getAllEvents() {
         try {
-            const events = await Evenements.findAll();
+            const events = await Evenement.findAll();
             return events;
         } catch (error) {
             throw new Error(`Erreur lors de la récupération des événements: ${error}`);
@@ -24,7 +24,7 @@ const eventService = {
     // READ: Récupérer un événement par ID
     async getEventById(id) {
         try {
-            const event = await Evenements.findByPk(id);
+            const event = await Evenement.findByPk(id);
             if (!event) throw new Error("Evénement non trouvé");
                 return event;
         } catch (error) {
@@ -35,7 +35,7 @@ const eventService = {
     // UPDATE: Mettre à jour un événement par ID
     async updateEvent(id, data) {
         try {
-            const event = await Evenements.findByPk(id);
+            const event = await Evenement.findByPk(id);
             if (!event) throw new Error("Evénement non trouvé");
                 await event.update(data);
                 return event;
@@ -47,7 +47,7 @@ const eventService = {
     // DELETE: Supprimer un événement par ID
     async deleteEvent(id) {
         try {
-        const event = await Evenements.findByPk(id);
+        const event = await Evenement.findByPk(id);
         if (!event) throw new Error("Evénement non trouvé");
             await event.destroy();
             return { message: "Evénement supprimé avec succès" };
@@ -56,3 +56,5 @@ const eventService = {
         }
     },
 };
+
+module.exports = eventService;
