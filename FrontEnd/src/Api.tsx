@@ -22,36 +22,6 @@ export const getSportById = async (id: string) => {
     }
 };
 
-export const createSport = async (sport: any) => {
-    try {
-        const response = await axios.post(`${API_URL}/sports`, sport);
-        return response.data;
-    } catch (error) {
-        console.error('Error creating sport:', error);
-        throw error;
-    }
-};
-
-export const updateSport = async (id: string, sport: any) => {
-    try {
-        const response = await axios.put(`${API_URL}/sports/${id}`, sport);
-        return response.data;
-    } catch (error) {
-        console.error(`Error updating sport with id ${id}:`, error);
-        throw error;
-    }
-};
-
-export const deleteSport = async (id: string) => {
-    try {
-        const response = await axios.delete(`${API_URL}/sports/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error(`Error deleting sport with id ${id}:`, error);
-        throw error;
-    }
-};
-
 export const getEvents = async () => {
     try {
         const response = await axios.get(`${API_URL}/getEvents`);
@@ -72,7 +42,7 @@ export const getEventById = async (id: string) => {
     }
 };
 
-export const createEvent = async (event: any) => {
+export const createEvent = async (event: unknown) => {
     try {
         const response = await axios.post(`${API_URL}/events`, event);
         return response.data;
@@ -82,7 +52,7 @@ export const createEvent = async (event: any) => {
     }
 };
 
-export const updateEvent = async (id: string, event: any) => {
+export const updateEvent = async (id: string, event: unknown) => {
     try {
         const response = await axios.put(`${API_URL}/events/${id}`, event);
         return response.data;
