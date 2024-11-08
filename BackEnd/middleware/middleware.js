@@ -19,4 +19,5 @@ const configureMiddleware = (app) => {
     app.use(cors());
 };
 
+
 module.exports = configureMiddleware;
