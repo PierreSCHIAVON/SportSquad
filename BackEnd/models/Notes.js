@@ -11,24 +11,24 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-            model: 'Users', // Fait référence au modèle Users
-            key: 'id_user'
+                model: 'Users', // Fait référence au modèle Users
+                key: 'id_user'
             }
         },
         destinataire_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-            model: 'Users', // Fait référence au modèle Users
-            key: 'id_user'
+                model: 'Users', // Fait référence au modèle Users
+                key: 'id_user'
             }
         },
         id_evenement: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-            model: 'Evenements', // Fait référence au modèle Evenements
-            key: 'id_evenement'
+                model: 'Evenements', // Fait référence au modèle Evenements
+                key: 'id_evenement'
             }
         },
         note: {
