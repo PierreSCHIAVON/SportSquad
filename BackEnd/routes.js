@@ -7,8 +7,8 @@ const userController = require('./controllers/userController');
 const eventController = require('./controllers/eventsController');
 
 // Route to get all users
-router.get('/getAllUser', validateRegister, userController.getAllUsers);
-router.post('/addUser', userController.createUser);
+router.get('/getAllUser', userController.getAllUsers);
+router.post('/addUser', validateRegister, userController.createUser);
 router.get('/getEvents', eventController.getAllEvents);
 
 module.exports = router;
