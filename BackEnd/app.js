@@ -1,26 +1,19 @@
 const express = require('express');
-const sequelize = require('./models').sequelize_object;  
+const cors = require('cors');
+require('./models').sequelize_object;
+
+const corsOptions = {
+    origin: 'http://localhost:5173', // URL du front
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204
+};
+
 const app = express();
 const userRoutes = require('./routes');
-const configureMiddleware = require('./middleware/middleware');
 
-configureMiddleware(app);
-
-// Test database connection
-async function testDBConnection() {
-  try {
-    await sequelize_object.authenticate({alter:true});
-    await sequelize_object.sync();
-    console.log('Connexion réussie à la base de données PostgreSQL !');
-  } catch (error) {
-    console.error('Impossible de se connecter à la base de données :', error);
-  }
-}
-
-testDBConnection();
-
-// Use the user routes
 app.use('/', userRoutes);
+app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
