@@ -20,7 +20,17 @@ async function createUser(req, res) {
     }
 }
 
+async function getUserById(req, res) {
+  try {
+    const users = await userService.getUserById(req.params.id);
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 module.exports = {
     getAllUsers,
+    getUserById,
     createUser
 };

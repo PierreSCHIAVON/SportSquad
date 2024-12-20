@@ -34,7 +34,7 @@ const Home: React.FC = () => {
     return (
         <div className="container">
             <Header></Header>
-            <Breadcrumb items={[{ label: 'Home', href: '/' }]} />
+            <Breadcrumb items={[{ label: 'Home', href: '/' },{ label: 'Profil', href: '/profil' }]} />
             <main>
                 <section className="mb-4">
                     <h2 className="text-center">Upcoming Events</h2>
