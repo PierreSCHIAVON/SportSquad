@@ -10,8 +10,11 @@ const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
 let sequelize;
-
-sequelize_object = new Sequelize(config.database, config.username, config.password, config);
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
 
 fs
   .readdirSync(__dirname)
@@ -24,7 +27,7 @@ fs
     );
   })
   .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize_object, Sequelize.DataTypes);
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });
 
@@ -34,7 +37,7 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-db.sequelize_object = sequelize;
+db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
