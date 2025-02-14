@@ -7,7 +7,7 @@ const swaggerOptions = {
         info: {
             title: "Sport Squad API",
             version: "1.0.0",
-            description: "API pour gérer des évenements sportifs",
+            description: "API pour gérer des événements sportifs",
             contact: {
                 name: "CleverDev",
                 url: "https://cleverdev.fr/",
