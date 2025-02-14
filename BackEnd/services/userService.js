@@ -1,4 +1,6 @@
 const { User } = require('../models'); // Importation du modèle User
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const userService = {
     // CREATE: Créer un nouvel utilisateur
@@ -6,7 +8,7 @@ const userService = {
         try {
             const newUser = await User.create(data);
             return newUser;
-        } catch (error) {
+        } catch (error) {llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll
             throw new Error(`Erreur lors de la création de l'utilisateur: ${error.message}`);
         }
     },
@@ -55,6 +57,18 @@ const userService = {
             throw new Error(`Erreur lors de la suppression de l'utilisateur: ${error.message}`);
         }
     },
+
+    async login(email, password) {
+        const user = await User.findOne({ where: { email } });
+        if (!user) throw new Error('Utilisateur non trouvé');
+    
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) throw new Error('Mot de passe incorrect');
+    
+        const token = jwt.sign({ userId: user.id_user }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        
+        return { token };
+    } 
 };
 
 module.exports = userService;

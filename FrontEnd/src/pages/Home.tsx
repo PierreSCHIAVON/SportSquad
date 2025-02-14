@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getEvents } from '../services/eventsService';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Breadcrumb from '../components/Breadcrumb';
+import Breadcrumb from '../Components/Breadcrumb';
 import Evenements from './Events';
 import Header from './Header';
 import Footer from './Footer';
