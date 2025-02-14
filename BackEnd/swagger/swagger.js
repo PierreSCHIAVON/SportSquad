@@ -5,9 +5,9 @@ const swaggerOptions = {
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "Bibliothèque API",
+            title: "Sport Squad API",
             version: "1.0.0",
-            description: "API pour gérer une bibliothèque",
+            description: "API pour gérer des évenements sportifs",
             contact: {
                 name: "CleverDev",
                 url: "https://cleverdev.fr/",
