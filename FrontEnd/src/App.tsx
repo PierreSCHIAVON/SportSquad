@@ -1,16 +1,11 @@
-
-import './App.css'
-import Routes from './routes/routes';
-import { BrowserRouter as Router } from 'react-router-dom';
+import './App.css';
+import Layout from './Components/Homepage/Layout';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Routes />
-      </div>
-    </Router>
+    // Affichage direct du Layout comme page principale
+    <Layout />
   );
 }
 
-export default App
+export default App;
