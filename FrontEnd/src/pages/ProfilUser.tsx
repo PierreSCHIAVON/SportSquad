@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getUserById } from '../services/userService';
-import ProfilUser from './User'; // Importation du composant ProfilUser
+import UserInfos from '../components/UserInfos'; // Importation du composant UserInfos
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Breadcrumb from '../components/Breadcrumb';
 import Header from './Header';
@@ -21,7 +21,7 @@ interface User {
     localisation: string;
 }
 
-const UserProfile: React.FC = () => {
+const ProfilUser: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [user, setUser] = useState<User | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -77,11 +77,11 @@ const UserProfile: React.FC = () => {
             <Header />
             <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Profil', href: `/profil/${id}` }]} />
             <main>
-                <ProfilUser user={user} isOwnProfile={isOwnProfile} />
+                <UserInfos user={user} isOwnProfile={isOwnProfile} />
             </main>
             <Footer />
         </div>
     );
 };
 
-export default UserProfile;
+export default ProfilUser;
