@@ -1,12 +1,5 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-<<<<<<< HEAD
-
-const Footer: React.FC = () => {
-    return (
-        <footer className="mt-4 text-center">
-            <p>&copy; 2024 SportsSquad. All rights reserved.</p>
-=======
 import './ConditionsUtilisation.tsx'
 
 const Footer: React.FC = () => {
@@ -18,7 +11,6 @@ const Footer: React.FC = () => {
                     Conditions d'utilisation
                 </a>
             </p>
->>>>>>> 0940df774802383dd5df823c1ee01706695fb49d
         </footer>
     );
 };

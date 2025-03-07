@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { getEvents } from '../services/eventsService';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Breadcrumb from '../components/Breadcrumb';
 import Evenements from './Events';
 import Header from './Header';
 import Footer from './Footer';
+import Breadcrumb from '../Components/Breadcrumb';
 
 interface Event {
     id_evenement: number;
@@ -34,11 +34,7 @@ const Home: React.FC = () => {
     return (
         <div className="container">
             <Header></Header>
-<<<<<<< HEAD
-            <Breadcrumb items={[{ label: 'Home', href: '/' }]} />
-=======
             <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Rechercher', href: '/search' }]} />
->>>>>>> 0940df774802383dd5df823c1ee01706695fb49d
             <main>
                 <section className="mb-4">
                     <h2 className="text-center">Upcoming Events</h2>
