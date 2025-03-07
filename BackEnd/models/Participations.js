@@ -11,7 +11,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
+<<<<<<< HEAD
                 model: 'Users', // Nom du modèle `User`
+=======
+                model: 'User', // Nom du modèle `User`
+>>>>>>> 0940df774802383dd5df823c1ee01706695fb49d
                 key: 'id_user'
             }
         },
@@ -19,7 +23,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
+<<<<<<< HEAD
                 model: 'Evenements', // Nom du modèle `Evenement`
+=======
+                model: 'Evenement', // Nom du modèle `Evenement`
+>>>>>>> 0940df774802383dd5df823c1ee01706695fb49d
                 key: 'id_evenement'
             }
         },

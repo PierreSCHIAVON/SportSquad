@@ -4,6 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+<<<<<<< HEAD
+=======
+    "npm run" : "npm run dev",
+>>>>>>> 0940df774802383dd5df823c1ee01706695fb49d
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
