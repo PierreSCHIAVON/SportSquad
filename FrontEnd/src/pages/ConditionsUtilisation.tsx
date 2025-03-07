@@ -4,7 +4,7 @@ import Breadcrumb from "../Components/Breadcrumb.tsx";
 const ConditionsUtilisation: React.FC = () => {
     return (
         <div className="container mt-5">
-            <Breadcrumb items={[{ label: 'Home', href: '/' }]} />
+            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Rechercher', href: '/search' }]} />
             <h1 className="text-center mb-4" style={{ color: '#FFAA00', fontWeight: 'bold' }}>Conditions d'utilisation</h1>
             <p className="lead text-muted text-center">
                 Bienvenue sur notre plateforme. En utilisant nos services, vous acceptez les conditions générales suivantes :
