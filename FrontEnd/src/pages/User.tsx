@@ -24,8 +24,9 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
   // État local pour gérer les valeurs modifiées
   const [editing, setEditing] = useState(false);
   const [updatedUser, setUpdatedUser] = useState<User>(user);
+  const [updatingPass, updatePassword] = useState(false);
 
-  // Fonction pour gérer les changements des champs du formulaire
+  // Fonction pour gérer les changements des champs du formulaire user
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setUpdatedUser((prevState) => ({
@@ -36,8 +37,8 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
 
   const [error, setError] = useState<string | null>(null);
 
-  // Fonction pour gérer la soumission du formulaire
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Fonction pour gérer la soumission du formulaire user
+  const handleSubmitUser = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null); // Réinitialiser l'erreur avant la requête
 
@@ -51,6 +52,23 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
     }
   };
 
+  // Fonction pour gérer la soumission du formulaire password
+  const handleSubmitPass = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null); // Réinitialiser l'erreur avant la requête
+
+    try {
+      //await UpdatePass(user.id_user, updatedPassword);
+      //console.log('Mot de passe mis à jour avec succès');
+      setError("La mise a jour n'est pas implémenté"); //a supprimer quand fonction implémenté
+      //updatePassword(false);
+      //window.location.reload();
+    } catch (err) {
+      setError("Une erreur est survenue lors de la mise à jour. Veuillez réessayer.");
+      //message d'erreur sur le mot de passe ??
+    }
+  };
+
   return (
     <div className="profil-user-container">
       <div className="profil-titre">
@@ -59,7 +77,7 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
         <p>@{user.pseudo}</p>
       </div>
       
-      {!editing && (
+      {!editing && !updatingPass && (
       <div className="profil-info">
         <h3>Informations personnelles</h3>
         <ul>
@@ -74,17 +92,17 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
       </div>
       )}
       
-      {isOwnProfile && !editing ? (
+      {isOwnProfile && !editing && !updatingPass ? (
         <div className="profil-buttons">
           <h3>Modifier votre profil</h3>
           <button className="edit-button" onClick={() => setEditing(true)}>Modifier les informations</button>
-          <button className="edit-button">Changer le mot de passe</button>
+          <button className="edit-button" onClick={() => updatePassword(true)}>Changer le mot de passe</button>
         </div>
       ) : null}
 
       {/* Formulaire de modification */}
       {editing && (
-        <form onSubmit={handleSubmit} className="edit-form">
+        <form onSubmit={handleSubmitUser} className="edit-form">
           <ul>
           <li className="form-group">
             {error && (
@@ -154,6 +172,45 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
           </ul>
           <button type="submit" className="save-button">Enregistrer les modifications</button>
           <button type="button" className="cancel-button" onClick={() => setEditing(false)}>Annuler</button>
+        </form>
+      )}
+
+      {/* Formulaire d'update password */}
+      {updatingPass && (
+        <form onSubmit={handleSubmitPass} className="update-form">
+          <ul>
+          <li className="form-group">
+            {error && (
+              <div className="alert alert-danger mt-4 text-center" role="alert">
+                {error}
+              </div>
+            )}
+            <label htmlFor="actualpassword">Mot de passe actuelle</label>
+            <input
+              type="password"
+              id="actualpassword"
+              name="actualpassword"
+            />
+          </li>
+          <li className="form-group">
+            <label htmlFor="newpassword">Nouveau mot de passe</label>
+            <input
+              type="password"
+              id="newpassword"
+              name="newpassword"
+            />
+          </li>
+          <li className="form-group">
+            <label htmlFor="newpasswordverif">Verification du mot de passe</label>
+            <input
+              type="password"
+              id="newpasswordverif"
+              name="newpasswordverif"
+            />
+          </li>
+          </ul>
+          <button type="submit" className="save-button">Enregistrer</button>
+          <button type="button" className="cancel-button" onClick={() => updatePassword(false)}>Annuler</button>
         </form>
       )}
     </div>

@@ -36,8 +36,6 @@ const UserProfile: React.FC = () => {
             } catch (err: any) {
                 setError(err.message || "Erreur lors du chargement des données utilisateur.");
                 setUser(null);
-            } finally {
-                setLoading(false);
             }
         };
 
