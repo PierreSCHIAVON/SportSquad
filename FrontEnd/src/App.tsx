@@ -1,8 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Layout from "./Components/Homepage/Layout";
-import Body from "./Components/Homepage/Body";
-import About from "./Components/Homepage/About";
+import Layout from "./Components/Layout.tsx";
+import Body from "./Components/Layout/Body.tsx";
+import About from "./Components/Layout/About.tsx";
+import ConditionsUtilisation from "./Components/ConditionsUtilisation.tsx";
+import SearchPage from "./Components/Search.tsx";
+import ProfilUser from './Components/ProfilUser.tsx';
 
 const App: React.FC = () => {
   return (
@@ -13,6 +16,9 @@ const App: React.FC = () => {
           <Route index element={<Body />} />
           {/* Autres pages */}
           <Route path="about" element={<About />} />
+          <Route path="search" element={<SearchPage />} />
+          <Route path="profil/:id" element={<ProfilUser />} />
+          <Route path="conditions-utilisation" element={<ConditionsUtilisation />} />
         </Route>
       </Routes>
     </BrowserRouter>

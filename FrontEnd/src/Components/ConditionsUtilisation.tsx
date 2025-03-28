@@ -1,10 +1,8 @@
 import React from "react";
-import Breadcrumb from "../Components/Breadcrumb.tsx";
 
 const ConditionsUtilisation: React.FC = () => {
     return (
         <div className="container mt-5">
-            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Rechercher', href: '/search' }]} />
             <h1 className="text-center mb-4" style={{ color: '#FFAA00', fontWeight: 'bold' }}>Conditions d'utilisation</h1>
             <p className="lead text-muted text-center">
                 Bienvenue sur notre plateforme. En utilisant nos services, vous acceptez les conditions générales suivantes :
@@ -47,10 +45,6 @@ const ConditionsUtilisation: React.FC = () => {
                     <a href="mailto:support@example.com" className="ms-2 text-decoration-none fw-bold text-info">support@example.com</a>.
                 </p>
             </div>
-
-            <footer className="text-center mt-5 text-muted border-top pt-3">
-                <p>&copy; {new Date().getFullYear()} <span className="fw-bold" style={{ color: '#FFAA00' }}>SportSquad</span>. Tous droits réservés.</p>
-            </footer>
         </div>
     );
 };

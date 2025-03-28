@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getUserById } from '../services/userService';
-import UserInfos from '../components/UserInfos'; // Importation du composant UserInfos
+import UserInfos from './User/UserInfos'; // Importation du composant UserInfos
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Breadcrumb from '../components/Breadcrumb';
-import Header from './Header';
-import Footer from './Footer';
 
 interface User {
     id_user: number;
@@ -45,14 +42,9 @@ const ProfilUser: React.FC = () => {
     if (error) {
         return (
             <div className="container">
-                <Header />
-                <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Erreur', href: `/profil/${id}` }]} />
-                <main>
-                    <div className="alert alert-danger mt-4 text-center" role="alert">
-                        {error}
-                    </div>
-                </main>
-                <Footer />
+                <div className="alert alert-danger mt-4 text-center" role="alert">
+                    {error}
+                </div>
             </div>
         );
     }
@@ -60,26 +52,16 @@ const ProfilUser: React.FC = () => {
     if (!user) {
         return (
             <div className="container">
-                <Header />
-                <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Utilisateur non trouvé', href: '/profil' }]} />
-                <main>
-                    <div className="alert alert-warning mt-4 text-center" role="alert">
-                        Utilisateur non trouvé.
-                    </div>
-                </main>
-                <Footer />
+                <div className="alert alert-warning mt-4 text-center" role="alert">
+                    Utilisateur non trouvé.
+                </div>
             </div>
         );
     }
 
     return (
         <div className="container">
-            <Header />
-            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Profil', href: `/profil/${id}` }]} />
-            <main>
-                <UserInfos user={user} isOwnProfile={isOwnProfile} />
-            </main>
-            <Footer />
+            <UserInfos user={user} isOwnProfile={isOwnProfile} />
         </div>
     );
 };
