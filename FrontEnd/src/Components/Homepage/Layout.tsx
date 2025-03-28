@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -8,7 +9,6 @@ import DiscordIcon from "@mui/icons-material/Chat";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import RightSidebar from "./RightSidebar";
-import Body from "./Body";
 
 const Layout: React.FC = () => {
   return (
@@ -23,19 +23,20 @@ const Layout: React.FC = () => {
       {/* Header */}
       <Header />
 
-      {/* Main content */}
+      {/* Contenu principal */}
       <Box
         sx={{
           display: "flex",
           flex: 1,
           paddingLeft: "10px",
           paddingRight: "10px",
+          position: "relative",
         }}
       >
-        {/* Sidebar */}
+        {/* Sidebar gauche */}
         <Sidebar />
 
-        {/* Main content area */}
+        {/* Zone de contenu dynamique */}
         <Box
           sx={{
             flex: 1,
@@ -45,11 +46,13 @@ const Layout: React.FC = () => {
             boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
           }}
         >
-          <Body />
+          <Outlet />
         </Box>
 
-        {/* Right Sidebar */}
+        {/* Sidebar droite */}
         <RightSidebar />
+
+        {/* Bloc social et mentions en bas à droite */}
         <Box
           sx={{
             position: "absolute",
