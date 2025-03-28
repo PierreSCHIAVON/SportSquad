@@ -62,7 +62,7 @@ export const getEvents = async () => {
     }
 };
 
-export const getEventById = async (id: string) => {
+export const getEventById = async (id: number) => {
     try {
         const response = await axios.get(`${API_URL}/events/${id}`);
         return response.data;

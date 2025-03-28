@@ -8,7 +8,8 @@ import SearchPage from "./Components/Search.tsx";
 import ProfilUser from './Components/ProfilUser.tsx';
 import LoginPage from "./Components/Login";
 import AdditionalInfo from "./Components/Additional-info";
-import PrivateRoute from "./Components/PrivateRoutes"; // Import du composant
+import PrivateRoute from "./Components/PrivateRoutes";
+import EventPage from "./Components/EventPage.tsx"; // Import du composant
 
 const App: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const App: React.FC = () => {
             <Route path="search" element={<SearchPage />} />
             <Route path="profil/:id" element={<ProfilUser />} />
             <Route path="conditions-utilisation" element={<ConditionsUtilisation />} />
+            <Route path="/event/:id" element={<EventPage />} />
           </Route>
           
         </Route>

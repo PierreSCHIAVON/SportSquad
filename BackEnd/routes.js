@@ -247,7 +247,10 @@ router.put('/updateUser/:id', userController.updateUser);
  *                     description: Date de l'événement
  */
 router.get('/getEvents', eventController.getAllEvents);
+router.get('/events/:id', eventController.getEventById);
 router.post('/login', authController.loginUser)
 router.post('/register', validateRegister, userController.createUser);
+
+
 
 module.exports = router;

@@ -10,6 +10,22 @@ async function getAllEvents(req, res) {
     }
 }
 
+async function getEventById(req, res) {
+    try {
+        const { id } = req.params;
+        const event = await eventService.getEventById(id);
+
+        if (!event) {
+            return res.status(404).json({ error: "Événement non trouvé" });
+        }
+
+        res.status(200).json(event);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 module.exports = {
-    getAllEvents
+    getAllEvents,
+    getEventById
 };
