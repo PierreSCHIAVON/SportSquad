@@ -15,7 +15,7 @@ const LoginPage = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            navigate('/dashboard');
+            navigate('/');
         }
     }, [navigate]);
 
@@ -31,11 +31,12 @@ const LoginPage = () => {
         try {
             const endpoint = isLogin ? '/login' : '/register';
             const response = await api.post(endpoint, { email, password });
-            console.log(response.data);
             
             if (isLogin) {
                 localStorage.setItem('token', response.data.token);
-                navigate('/dashboard');
+                if(response.data.newAccount) {
+                    navigate('login/additional-info', { state: { email } });
+                }
             } else {
                 setIsLogin(true);
             }

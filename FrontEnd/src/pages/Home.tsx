@@ -6,7 +6,6 @@ import Breadcrumb from '../Components/Breadcrumb';
 import Evenements from './Events';
 import Header from './Header';
 import Footer from './Footer';
-import Breadcrumb from '../Components/Breadcrumb';
 
 const userId = 1;
 interface Event {
@@ -24,33 +23,33 @@ interface Event {
 
 const Home: React.FC = () => {
     const [events, setEvents] = useState<Event[]>([]);
-    const navigate = useNavigate();
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false); // Simule l'état d'authentification
+        const navigate = useNavigate();
+        const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false); // Simule l'état d'authentification
 
-    useEffect(() => {
-        // Vérifiez si l'utilisateur est connecté
-        const checkAuthentication = () => {
-            const token = localStorage.getItem('token'); // Exemple : vérifiez un token dans le localStorage
-            if (!token) {
-                navigate('/login'); // Redirigez vers /register si non connecté
-            } else {
-                setIsAuthenticated(true);
-            }
-        };
-
-        checkAuthentication();
-    }, [navigate]);
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            const fetchEvents = async () => {
-                const eventsData = await getEvents();
-                setEvents(eventsData);
+        useEffect(() => {
+            // Vérifiez si l'utilisateur est connecté
+            const checkAuthentication = () => {
+                const token = localStorage.getItem('token'); // Exemple : vérifiez un token dans le localStorage
+                if (!token) {
+                    navigate('/login'); // Redirigez vers /register si non connecté
+                } else {
+                    setIsAuthenticated(true);
+                }
             };
 
-            fetchEvents();
-        }
-    }, [isAuthenticated]);
+            checkAuthentication();
+        }, [navigate]);
+
+        useEffect(() => {
+            if (isAuthenticated) {
+                const fetchEvents = async () => {
+                    const eventsData = await getEvents();
+                    setEvents(eventsData);
+                };
+
+                fetchEvents();
+            }
+        }, [isAuthenticated]);
 
     return (
         <div className="container">
