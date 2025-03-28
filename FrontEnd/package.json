@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "npm run" : "npm run dev",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -12,7 +13,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^6.4.4",
+    "@mui/icons-material": "^6.2.1",
     "@mui/material": "^6.2.1",
     "@studio-freight/lenis": "^1.0.42",
     "axios": "^1.7.7",
