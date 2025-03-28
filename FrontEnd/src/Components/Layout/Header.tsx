@@ -37,7 +37,7 @@ const Header: React.FC = () => {
         </IconButton>
 
         {/* Icône de profil */}
-        <IconButton sx={{ color: '#FFAA00' }}>
+        <IconButton sx={{ color: '#FFAA00' }} href='/profil/1'> {/* A changer quand login implémenté */}
           <AccountCircleIcon />
         </IconButton>
       </div>

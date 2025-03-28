@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getEvents } from '../services/eventsService';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Breadcrumb from '../components/Breadcrumb';
 import Evenements from './Events';
-import Header from './Header';
-import Footer from './Footer';
 
 interface Event {
     id_evenement: number;
@@ -41,9 +38,6 @@ const SearchPage: React.FC = () => {
 
     return (
         <div className="container">
-            <Header />
-            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Rechercher', href: '/search' }]} />
-            <main>
                 <section className="mb-4">
                     <h2 className="text-center">Rechercher un événement</h2>
                     <input
@@ -55,8 +49,6 @@ const SearchPage: React.FC = () => {
                     />
                     <Evenements events={filteredEvents} />
                 </section>
-            </main>
-            <Footer />
         </div>
     );
 };

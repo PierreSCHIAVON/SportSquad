@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { updateUser } from '../services/userService';
+import { updateUser } from '../../services/userService';
 
 interface User {
   id_user: number;

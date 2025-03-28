@@ -6,9 +6,9 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import DiscordIcon from "@mui/icons-material/Chat";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import RightSidebar from "./RightSidebar";
+import Header from "./Layout/Header";
+import Sidebar from "./Layout/Sidebar";
+import RightSidebar from "./Layout/RightSidebar";
 
 const Layout: React.FC = () => {
   return (
@@ -80,7 +80,7 @@ const Layout: React.FC = () => {
             variant="body2"
             sx={{ marginTop: "10px", fontSize: "12px", marginRight: "110px" }}
           >
-            Consulter les conditions générales d'utilisation <a href="#">ici</a>
+            Consulter les conditions générales d'utilisation <a href="/conditions-utilisation">ici</a>
             .
           </Typography>
           <Typography

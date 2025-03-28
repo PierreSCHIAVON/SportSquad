@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getEvents } from '../services/eventsService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Evenements from './Events';
-import Header from './Header';
-import Footer from './Footer';
-import Breadcrumb from '../Components/Breadcrumb';
 
-const userId = 1;
 interface Event {
     id_evenement: number;
     id_user: number;
@@ -20,7 +16,7 @@ interface Event {
     etat: string;
 }
 
-const Home: React.FC = () => {
+const HomeContent: React.FC = () => {
     const [events, setEvents] = useState<Event[]>([]);
 
     useEffect(() => {
@@ -34,17 +30,12 @@ const Home: React.FC = () => {
 
     return (
         <div className="container">
-            <Header></Header>
-            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Rechercher', href: '/search' },{ label: 'Profil', href: `/profil/${userId}` }]} />
-            <main>
-                <section className="mb-4">
-                    <h2 className="text-center">Upcoming Events</h2>
-                    <Evenements events={events} />
-                </section>
-                </main>
-            <Footer></Footer>
+            <section className="mb-4">
+                <h2 className="text-center">A venir</h2>
+                <Evenements events={events} />
+            </section>
         </div>
     );
 };
 
-export default Home;
+export default HomeContent;

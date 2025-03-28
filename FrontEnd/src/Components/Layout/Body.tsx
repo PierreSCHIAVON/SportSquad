@@ -1,4 +1,5 @@
 import React from "react";
+import HomeContent from '../HomeContent';
 
 const Body: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const Body: React.FC = () => {
       >
         Bienvenue sur SPORTSQUAD
       </h1>
+      <HomeContent/>
     </div>
   );
 };
