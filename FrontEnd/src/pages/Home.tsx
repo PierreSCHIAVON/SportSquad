@@ -6,6 +6,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Breadcrumb from '../Components/Breadcrumb';
 
+const userId = 1;
 interface Event {
     id_evenement: number;
     id_user: number;
@@ -34,7 +35,7 @@ const Home: React.FC = () => {
     return (
         <div className="container">
             <Header></Header>
-            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Rechercher', href: '/search' }]} />
+            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Rechercher', href: '/search' },{ label: 'Profil', href: `/profil/${userId}` }]} />
             <main>
                 <section className="mb-4">
                     <h2 className="text-center">Upcoming Events</h2>

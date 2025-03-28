@@ -46,6 +46,66 @@ const eventController = require('./controllers/eventsController');
 router.get('/getAllUser', userController.getAllUsers);
 /**
  * @swagger
+ * /getUserById/{id}:
+ *   get:
+ *     summary: Récupère les informations d'un utilisateur par son ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: L'ID unique de l'utilisateur
+ *     responses:
+ *       200:
+ *         description: Informations de l'utilisateur récupérées avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: ID unique de l'utilisateur
+ *                 nom:
+ *                   type: string
+ *                   description: Nom de l'utilisateur
+ *                 prénom:
+ *                   type: string
+ *                   description: Prénom de l'utilisateur
+ *                 pseudo:
+ *                   type: string
+ *                   description: Prénom de l'utilisateur
+ *                 email:
+ *                   type: string
+ *                   description: Email de l'utilisateur
+ *                 niveau:
+ *                   type: string
+ *                   description: Niveau de l'utilisateur en sport/dans son sport
+ *                 date_inscription:
+ *                   type: string
+ *                   format: date
+ *                   description: Date d'inscription de l'utilisateur
+ *                 photo:
+ *                   type: string
+ *                   description: URL de la photo de profil de l'utilisateur
+ *                 sports_fav:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: Liste des sports favoris de l'utilisateur
+ *                 localisation:
+ *                   type: string
+ *                   description: Localisation géographique de l'utilisateur
+ *       404:
+ *         description: Utilisateur non trouvé
+ *       500:
+ *         description: Erreur interne du serveur
+ */
+router.get('/getUserById/:id', userController.getUserById);
+/**
+ * @swagger
  * /addUser:
  *   post:
  *     summary: Ajoute un nouvel utilisateur
@@ -102,6 +162,59 @@ router.get('/getAllUser', userController.getAllUsers);
  *                   description: Adresse email de l'utilisateur
  */
 router.post('/addUser', userController.createUser);
+
+/**
+ * @swagger
+ * /updateUser/{id}:
+ *   post:
+ *     summary: Met à jour les informations d'un utilisateur par son ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: L'ID unique de l'utilisateur à mettre à jour
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nom:
+ *                 type: string
+ *                 description: Nouveau nom de l'utilisateur
+ *               email:
+ *                 type: string
+ *                 description: Nouvel email de l'utilisateur
+ *               date_inscription:
+ *                 type: string
+ *                 format: date
+ *                 description: Date d'inscription de l'utilisateur
+ *               photo:
+ *                 type: string
+ *                 description: URL de la nouvelle photo de profil de l'utilisateur
+ *               sports_fav:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Liste mise à jour des sports favoris de l'utilisateur
+ *               localisation:
+ *                 type: string
+ *                 description: Nouvelle localisation de l'utilisateur
+ *     responses:
+ *       200:
+ *         description: Informations de l'utilisateur mises à jour avec succès
+ *       400:
+ *         description: Requête invalide (données incorrectes ou incomplètes)
+ *       404:
+ *         description: Utilisateur non trouvé
+ *       500:
+ *         description: Erreur interne du serveur
+ */
+router.put('/updateUser/:id', userController.updateUser);
 
 /**
  * @swagger
