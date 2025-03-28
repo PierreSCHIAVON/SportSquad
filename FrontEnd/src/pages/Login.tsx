@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useState, useEffect } from 'react';
 import api from '../api/Api';
 import { useNavigate } from 'react-router-dom';
@@ -29,6 +31,7 @@ const LoginPage = () => {
         try {
             const endpoint = isLogin ? '/login' : '/register';
             const response = await api.post(endpoint, { email, password });
+            console.log(response.data);
             
             if (isLogin) {
                 localStorage.setItem('token', response.data.token);
@@ -36,8 +39,10 @@ const LoginPage = () => {
             } else {
                 setIsLogin(true);
             }
+        
         } catch (error: any) { 
-            setError(error.response?.data?.error || "Une erreur s'est produite");
+            console.log(error.response);
+            setError(error.response?.data?.error || error.response?.data?.message);
         }
     };
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Assurez-vous d'utiliser react-router-dom
 import { getEvents } from '../services/eventsService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Breadcrumb from '../Components/Breadcrumb';
@@ -22,26 +23,44 @@ interface Event {
 
 const Home: React.FC = () => {
     const [events, setEvents] = useState<Event[]>([]);
+    const navigate = useNavigate();
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false); // Simule l'état d'authentification
 
     useEffect(() => {
-        const fetchEvents = async () => {
-            const eventsData = await getEvents();
-            setEvents(eventsData);
+        // Vérifiez si l'utilisateur est connecté
+        const checkAuthentication = () => {
+            const token = localStorage.getItem('token'); // Exemple : vérifiez un token dans le localStorage
+            if (!token) {
+                navigate('/login'); // Redirigez vers /register si non connecté
+            } else {
+                setIsAuthenticated(true);
+            }
         };
 
-        fetchEvents();
-    }, []);
+        checkAuthentication();
+    }, [navigate]);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            const fetchEvents = async () => {
+                const eventsData = await getEvents();
+                setEvents(eventsData);
+            };
+
+            fetchEvents();
+        }
+    }, [isAuthenticated]);
 
     return (
         <div className="container">
             <Header></Header>
-            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Rechercher', href: '/search' },{ label: 'Profil', href: `/profil/${userId}` }]} />
+            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Rechercher', href: '/search' }, { label: 'Profil', href: `/profil/${userId}` }]} />
             <main>
                 <section className="mb-4">
                     <h2 className="text-center">Upcoming Events</h2>
                     <Evenements events={events} />
                 </section>
-                </main>
+            </main>
             <Footer></Footer>
         </div>
     );

@@ -47,9 +47,6 @@ const authController = require('./controllers/authController.js');
  *                     description: Email de l'utilisateur
  */
 router.get('/getAllUser', userController.getAllUsers);
-<<<<<<< HEAD
-router.post('/addUser', validateRegister, userController.createUser);
-=======
 /**
  * @swagger
  * /getUserById/{id}:
@@ -249,7 +246,6 @@ router.put('/updateUser/:id', userController.updateUser);
  *                     format: date
  *                     description: Date de l'événement
  */
->>>>>>> develop
 router.get('/getEvents', eventController.getAllEvents);
 router.post('/login', authController.loginUser)
 router.post('/register', validateRegister, userController.createUser);

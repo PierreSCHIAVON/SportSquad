@@ -67,7 +67,8 @@ const userService = {
     
         const token = jwt.sign({ userId: user.id_user }, process.env.JWT_SECRET, { expiresIn: '1h' });
         
-        return { token };
+        const newAccount = user.pseudo === null;
+        return { token, newAccount };
     } 
 };
 
