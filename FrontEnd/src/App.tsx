@@ -6,8 +6,8 @@ import About from "./Components/Layout/About.tsx";
 import ConditionsUtilisation from "./Components/ConditionsUtilisation.tsx";
 import SearchPage from "./Components/Search.tsx";
 import ProfilUser from './Components/ProfilUser.tsx';
-import LoginPage from "./pages/Login";
-import AdditionalInfo from "./pages/Additional-info";
+import LoginPage from "./Components/Login";
+import AdditionalInfo from "./Components/Additional-info";
 import PrivateRoute from "./Components/PrivateRoutes"; // Import du composant
 
 const App: React.FC = () => {
