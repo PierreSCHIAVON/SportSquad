@@ -11,16 +11,36 @@ async function getAllUsers(req, res) {
   }
 }
 
+async function getUserById(req, res) {
+  try {
+    const users = await userService.getUserById(req.params.id);
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 async function createUser(req, res) {
-    try {
-        const newUser = await userService.createUser(req.body);
-        res.status(201).json(newUser);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+  try {
+      const newUser = await userService.createUser(req.body);
+      res.status(201).json(newUser);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+}
+
+async function updateUser(req, res) {
+  try {
+      const updateUser = await userService.updateUser(req.params.id,req.body);
+      res.status(201).json(updateUser);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
 }
 
 module.exports = {
     getAllUsers,
-    createUser
+    getUserById,
+    createUser,
+    updateUser
 };
