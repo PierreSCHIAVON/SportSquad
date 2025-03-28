@@ -1,5 +1,6 @@
 const userService = require('../services/userService');
 const bcrypt = require('bcrypt');
+const { User } = require('../models'); 
 
 // Function to get all users
 async function getAllUsers(req, res) {
@@ -15,7 +16,14 @@ async function createUser(req, res) {
   try {
       // Vérifie si un mot de passe est fourni
       if (!req.body.password) {
-          return res.status(400).json({ error: 'Password is required' });
+          return res.status(400).json({ error: 'Le mot de passe est requis.' });
+      }
+      email = req.body.email;
+
+      // Vérifie si l'email existe déjà
+      const existingUser = await User.findOne({ where: { email } });
+      if (existingUser) {
+          return res.status(400).json({ error: 'Cette email est déjà associé à un compte existant, veuillez vous connecter.' });
       }
 
       // Hashage du mot de passe avec un salt
@@ -24,7 +32,7 @@ async function createUser(req, res) {
       // Remplace le mot de passe par son hash dans req.body
       const userData = {
           ...req.body,
-          password: hashedPassword,
+          password: hashedPassword
       };
 
       // Création de l'utilisateur via le service

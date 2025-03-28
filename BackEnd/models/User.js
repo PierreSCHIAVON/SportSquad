@@ -7,15 +7,15 @@ module.exports = (sequelize, DataTypes) => {
         },
         nom: {
             type: DataTypes.STRING(50),
-            allowNull: false,
+            allowNull: true,
         },
         prenom: {
             type: DataTypes.STRING(50),
-            allowNull: false,
+            allowNull: true,
         },
         pseudo: {
             type: DataTypes.STRING(50),
-            allowNull: false,
+            allowNull: true,
         },
         email: {
             type: DataTypes.STRING(50),
@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         tableName: 'Users',
-        timestamps: false,
+        timestamps: true,
     });
 
     User.associate = function(models) {

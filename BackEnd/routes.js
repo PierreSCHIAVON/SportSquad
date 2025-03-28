@@ -11,5 +11,6 @@ router.get('/getAllUser', userController.getAllUsers);
 router.post('/addUser', validateRegister, userController.createUser);
 router.get('/getEvents', eventController.getAllEvents);
 router.post('/login', authController.loginUser)
+router.post('/register', validateRegister, userController.createUser);
 
 module.exports = router;

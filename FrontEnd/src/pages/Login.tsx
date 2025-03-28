@@ -20,6 +20,11 @@ const LoginPage = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError(null);
+
+        if (password.length < 6) {
+            setError("Le mot de passe doit contenir au moins 6 caractères.");
+            return;
+        }
         
         try {
             const endpoint = isLogin ? '/login' : '/register';
@@ -31,8 +36,8 @@ const LoginPage = () => {
             } else {
                 setIsLogin(true);
             }
-        } catch {
-            setError('Erreur lors de la connexion ou de l’inscription.');
+        } catch (error: any) { 
+            setError(error.response?.data?.error || "Une erreur s'est produite");
         }
     };
 
@@ -59,6 +64,7 @@ const LoginPage = () => {
                             className="form-control"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            minLength={6}
                             required
                         />
                     </div>

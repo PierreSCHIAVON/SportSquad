@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('./models').sequelize_object;
+require('dotenv').config();
 
 const corsOptions = {
     origin: 'http://localhost:5173', // URL du front
