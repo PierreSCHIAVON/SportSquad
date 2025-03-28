@@ -6,6 +6,7 @@ import Breadcrumb from '../Components/Breadcrumb';
 import Evenements from './Events';
 import Header from './Header';
 import Footer from './Footer';
+import Breadcrumb from '../Components/Breadcrumb';
 
 const userId = 1;
 interface Event {
