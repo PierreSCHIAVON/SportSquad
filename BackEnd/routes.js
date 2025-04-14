@@ -221,6 +221,44 @@ router.put('/updateUser/:id', userController.updateUser);
 
 /**
  * @swagger
+ * /updateUserPass/{id}:
+ *   post:
+ *     summary: Met à jour du mot de passe d'un utilisateur par son ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: L'ID unique de l'utilisateur à mettre à jour
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               newPassword:
+ *                 type: string
+ *                 description: Nouveau mot de passe de l'utilisateur
+ *               actualPassword:
+ *                 type: string
+ *                 description: mot de passe actuel de l'utilisateur
+ *     responses:
+ *       200:
+ *         description: mot de passe de l'utilisateur mises à jour avec succès
+ *       400:
+ *         description: Requête invalide (données incorrectes ou incomplètes)
+ *       404:
+ *         description: Utilisateur non trouvé
+ *       500:
+ *         description: Erreur interne du serveur
+ */
+router.put('/updateUserPass/:id', userController.updateUserPass);
+
+/**
+ * @swagger
  * /getEvents:
  *   get:
  *     summary: Récupère tous les événements

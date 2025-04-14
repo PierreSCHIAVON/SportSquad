@@ -58,6 +58,22 @@ const userService = {
         }
     },
 
+    async updateUserPass(id, actualPassword, newPassword) {
+        try {
+            const user = await User.findByPk(id);
+            if (!user) throw new Error("Utilisateur non trouvé");
+    
+            const isMatch = await bcrypt.compare(actualPassword, user.password);
+            if (!isMatch) throw new Error("Mot de passe actuel incorrect");
+    
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+            await user.update({ password: hashedPassword });
+            return { message: "Mot de passe mis à jour avec succès" };
+        } catch (error) {
+            throw new Error(`Erreur lors de la mise à jour du mot de passe : ${error.message}`);
+        }
+    },
+
     async login(email, password) {
         const user = await User.findOne({ where: { email } });
         if (!user) throw new Error('Email ou mot de passe incorrect.');

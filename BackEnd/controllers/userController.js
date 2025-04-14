@@ -64,9 +64,28 @@ async function updateUser(req, res) {
   }
 }
 
+async function updateUserPass(req, res) {
+  try {
+    const { id } = req.params;
+    const { actualPassword, newPassword } = req.body;
+
+    if (!actualPassword || !newPassword) {
+      return res.status(400).json({ error: "Les mots de passe sont requis." });
+    }
+
+    const response = await userService.updateUserPass(id, actualPassword, newPassword);
+
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
+
 module.exports = {
     getAllUsers,
     getUserById,
     createUser,
-    updateUser
+    updateUser,
+    updateUserPass
 };

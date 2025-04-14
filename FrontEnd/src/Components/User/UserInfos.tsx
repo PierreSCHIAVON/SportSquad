@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { updateUser } from '../../services/userService';
+import { updateUser, updateUserPass } from '../../services/userService';
+import { IconButton } from '@mui/material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 interface User {
   id_user: number;
@@ -27,7 +29,7 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
   const [updatingPass, updatePassword] = useState(false);
 
   // Fonction pour gérer les changements des champs du formulaire user
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChangeUser = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setUpdatedUser((prevState) => ({
       ...prevState,
@@ -57,22 +59,52 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
     e.preventDefault();
     setError(null); // Réinitialiser l'erreur avant la requête
 
+    const actualPassword = (document.getElementById("actualpassword") as HTMLInputElement).value;
+    const newPassword = (document.getElementById("newpassword") as HTMLInputElement).value;
+    const newPasswordVerif = (document.getElementById("newpasswordverif") as HTMLInputElement).value;
+
+    // Vérifier que l'ancien mot de passe est rempli
+    if (!actualPassword) {
+        setError("Veuillez entrer votre mot de passe actuel.");
+        return;
+    }
+
+    // Vérifier que le nouveau mot de passe et la confirmation sont identiques
+    if (newPassword !== newPasswordVerif) {
+        setError("Les nouveaux mots de passe ne correspondent pas.");
+        return;
+    }
+
+    // Vérifier la complexité du mot de passe (au moins 8 caractères, une majuscule, une minuscule, un chiffre)
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(newPassword)) {
+        setError("Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.");
+        return;
+    }
+
+    const passwordData = {
+      actualPassword,
+      newPassword
+    };
+
     try {
-      //await UpdatePass(user.id_user, updatedPassword);
-      //console.log('Mot de passe mis à jour avec succès');
-      setError("La mise a jour n'est pas implémenté"); //a supprimer quand fonction implémenté
-      //updatePassword(false);
-      //window.location.reload();
+        await updateUserPass(user.id_user, passwordData);
+        console.log('Mot de passe mis à jour avec succès');
+        //setError("La mise à jour n'est pas implémentée"); // À supprimer quand la fonction sera prête
+        updatePassword(false);
+        window.location.reload();
     } catch (err) {
-      setError("Une erreur est survenue lors de la mise à jour. Veuillez réessayer.");
-      //message d'erreur sur le mot de passe ??
+        console.log(err);
+        setError("Une erreur est survenue lors de la mise à jour. Veuillez réessayer.");
     }
   };
 
   return (
     <div className="profil-user-container">
       <div className="profil-titre">
-        <img src={user.photo} alt={`${user.prenom} ${user.nom}`} className="profil-photo" />
+        <IconButton sx={{ color: '#FFAA00' }}  alt={`${user.prenom} ${user.nom}`} className="profil-photo" >
+          <AccountCircleIcon />
+        </IconButton>
         <h1>{user.prenom} {user.nom}</h1>
         <p>@{user.pseudo}</p>
       </div>
@@ -116,7 +148,7 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
               id="prenom"
               name="prenom"
               value={updatedUser.prenom}
-              onChange={handleChange}
+              onChange={handleChangeUser}
             />
           </li>
           <li className="form-group">
@@ -126,7 +158,7 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
               id="nom"
               name="nom"
               value={updatedUser.nom}
-              onChange={handleChange}
+              onChange={handleChangeUser}
             />
           </li>
           <li className="form-group">
@@ -136,7 +168,7 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
               id="email"
               name="email"
               value={updatedUser.email}
-              onChange={handleChange}
+              onChange={handleChangeUser}
             />
           </li>
           <li className="form-group">
@@ -146,7 +178,7 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
               id="niveau"
               name="niveau"
               value={updatedUser.niveau}
-              onChange={handleChange}
+              onChange={handleChangeUser}
             />
           </li>
           <li className="form-group">
@@ -156,7 +188,7 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
               id="sports_fav"
               name="sports_fav"
               value={updatedUser.sports_fav}
-              onChange={handleChange}
+              onChange={handleChangeUser}
             />
           </li>
           <li className="form-group">
@@ -166,7 +198,7 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
               id="localisation"
               name="localisation"
               value={updatedUser.localisation}
-              onChange={handleChange}
+              onChange={handleChangeUser}
             />
           </li>
           </ul>
