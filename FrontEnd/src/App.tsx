@@ -29,7 +29,7 @@ const App: React.FC = () => {
             <Route index element={<Body />} />
             <Route path="about" element={<About />} />
             <Route path="search" element={<SearchPage />} />
-            <Route path="profil/:id" element={<ProfilUser />} />
+            <Route path="profil" element={<ProfilUser />} />
             <Route
               path="conditions-utilisation"
               element={<ConditionsUtilisation />}
