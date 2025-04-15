@@ -31,12 +31,12 @@ const LoginPage = () => {
         try {
             const endpoint = isLogin ? '/login' : '/register';
             const response = await api.post(endpoint, { email, password });
-            
+
             if (isLogin) {
                 localStorage.setItem('token', response.data.token);
-                if(response.data.newAccount) {
-                    navigate('login/additional-info', { state: { email } });
-                }
+                localStorage.setItem('userId', response.data.userId);
+                if (response.data.newAccount) {
+                    navigate('login/additional-info', { state: { email } });}
             } else {
                 setIsLogin(true);
             }
@@ -45,6 +45,15 @@ const LoginPage = () => {
             console.log(error.response);
             setError(error.response?.data?.error || error.response?.data?.message);
         }
+    };
+
+    const handleLogout = () => {
+        // Supprimer le token et l'userId du localStorage
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+
+        // Rediriger l'utilisateur vers la page de connexion
+        navigate('/login');
     };
 
     return (
