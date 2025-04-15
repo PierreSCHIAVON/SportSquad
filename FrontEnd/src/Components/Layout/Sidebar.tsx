@@ -29,7 +29,7 @@ const Sidebar: React.FC = () => {
         <IconButton sx={{ marginBottom: "20px", color: "#FFAA00" }} href='/'>
           <HomeIcon fontSize="large" />
         </IconButton>
-        <IconButton sx={{ marginBottom: "20px", color: "#FFAA00" }}>
+        <IconButton sx={{ marginBottom: "20px", color: "#FFAA00" }} href='/create-event'>
           <AddCircleIcon fontSize="large" />
         </IconButton>
         <IconButton sx={{ marginBottom: "20px", color: "#FFAA00" }} href='/search'>

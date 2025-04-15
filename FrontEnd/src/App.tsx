@@ -10,6 +10,7 @@ import LoginPage from "./Components/Login";
 import AdditionalInfo from "./Components/Additional-info";
 import PrivateRoute from "./Components/PrivateRoutes";
 import EventPage from "./Components/EventPage.tsx"; // Import du composant
+import CreateEvent from "./Components/CreateEvent.tsx";
 
 const App: React.FC = () => {
   return (
@@ -28,6 +29,7 @@ const App: React.FC = () => {
             <Route path="profil/:id" element={<ProfilUser />} />
             <Route path="conditions-utilisation" element={<ConditionsUtilisation />} />
             <Route path="/event/:id" element={<EventPage />} />
+            <Route path="create-event" element={<CreateEvent />} />
           </Route>
           
         </Route>

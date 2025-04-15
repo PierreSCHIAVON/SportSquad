@@ -65,8 +65,7 @@ async function updateUser(req, res) {
 }
 
 async function postAdditionalInfo(req, res) {
-  try {
-      console.log("req.user:", req.user); 
+  try { 
       const userId = req.user.id;
       const data = req.body;
 

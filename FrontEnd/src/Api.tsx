@@ -122,7 +122,6 @@ export const getParticipationById = async (id: string) => {
     }
 };
 
-
 export const getParticipationsByUserId = async () => {
     const userId = localStorage.getItem('userId');
 
@@ -171,8 +170,6 @@ export const createParticipationWithUserId = async (userId: string, eventData: a
         throw error;
     }
 };
-
-
 
 export const updateParticipation = async (id: string, participation: any) => {
     try {

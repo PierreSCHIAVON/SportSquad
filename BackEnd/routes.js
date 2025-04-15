@@ -250,6 +250,7 @@ router.put('/updateUser/:id', userController.updateUser);
  */
 router.get('/getEvents', eventController.getAllEvents);
 router.get('/events/:id', eventController.getEventById);
+router.post('/events', verifyToken, eventController.createEvent);
 router.post('/login', authController.loginUser)
 router.post('/register', validateRegister, userController.createUser);
 router.post('/postAdditionalInfo', verifyToken, userController.postAdditionalInfo);

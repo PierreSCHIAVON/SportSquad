@@ -25,7 +25,19 @@ async function getEventById(req, res) {
     }
 }
 
+async function createEvent(req, res) {
+    try {
+        const eventData = req.body;
+        const userId = req.user.id;
+        const newEvent = await eventService.createEvent(userId, eventData);
+        res.status(201).json(newEvent);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 module.exports = {
     getAllEvents,
-    getEventById
+    getEventById,
+    createEvent,
 };

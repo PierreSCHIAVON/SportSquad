@@ -9,7 +9,7 @@ const verifyToken = (req, res, next) => {
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(403).json({ message: 'Accès interdit, token manquant' });
     }
-
+    
     const token = authHeader.split(' ')[1];
     try {
         const decoded = jwt.verify(token, SECRET_KEY);
