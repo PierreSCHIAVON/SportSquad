@@ -15,7 +15,7 @@ const Header: React.FC = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     // Rediriger l'utilisateur vers la page de connexion
-    navigate("/login");
+    window.location.href = "/login";
   };
 
   return (
