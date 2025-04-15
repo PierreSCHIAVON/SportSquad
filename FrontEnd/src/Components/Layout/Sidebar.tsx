@@ -37,13 +37,13 @@ const Sidebar: React.FC = () => {
         </IconButton>
         <IconButton
           sx={{ marginBottom: "20px", color: "#FFAA00" }}
-          href="/search"
+          href="/dashboard/search"
         >
           <SearchIcon fontSize="large" />
         </IconButton>
         <IconButton
           sx={{ marginBottom: "20px", color: "#FFAA00" }}
-          href="/myparticipations"
+          href="/dashboard/myparticipations"
         >
           <CalendarTodayIcon fontSize="large" />
         </IconButton>
