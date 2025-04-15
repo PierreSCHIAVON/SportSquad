@@ -24,7 +24,7 @@ const Evenements: React.FC<EvenementsProps> = ({ events }) => {
         <div className="row">
             {events.map((event, index) => (
                 <div key={event.id_evenement} className="mb-4">
-                    <Link to={`/event/${event.id_evenement}`} className="text-decoration-none">
+                    <Link to={`event/${event.id_evenement}`} className="text-decoration-none">
                         <div className={`card ${index % 2 === 0 ? 'bg-primary' : 'bg-secondary'} text-white`}>
                             <div className="card-body">
                                 <h3 className="card-title">{event.sport}</h3>
