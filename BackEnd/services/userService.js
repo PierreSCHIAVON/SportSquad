@@ -68,8 +68,15 @@ const userService = {
         const token = jwt.sign({ userId: user.id_user }, process.env.JWT_SECRET, { expiresIn: '1h' });
         
         const newAccount = user.pseudo === null;
-        return { token, newAccount };
-    } 
+        return { token,userId: user.id_user, newAccount };
+    },
+    // Déconnexion (juste une confirmation côté serveur)
+    async logout() {
+        return { message: 'Déconnexion réussie' };
+    },
+
+
 };
+
 
 module.exports = userService;

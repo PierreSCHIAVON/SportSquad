@@ -5,6 +5,7 @@ const { validateRegister, validateLogin } = require('./middlewares/validator.js'
 const userController = require('./controllers/userController');
 const eventController = require('./controllers/eventsController');
 const authController = require('./controllers/authController.js');
+const participationController = require('./controllers/participationsController');
 
 /**
  * @swagger
@@ -247,7 +248,9 @@ router.put('/updateUser/:id', userController.updateUser);
  *                     description: Date de l'événement
  */
 router.get('/getEvents', eventController.getAllEvents);
+router.get('/events/:id', eventController.getEventById);
 router.post('/login', authController.loginUser)
 router.post('/register', validateRegister, userController.createUser);
+router.post('/participations/user/:userId', participationController.createParticipationWithUserId);
 
 module.exports = router;

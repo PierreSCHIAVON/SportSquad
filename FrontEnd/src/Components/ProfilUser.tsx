@@ -63,7 +63,8 @@ const ProfilUser: React.FC = () => {
         <div className="container">
             <UserInfos user={user} isOwnProfile={isOwnProfile} />
         </div>
-    );
+
+);
 };
 
 export default ProfilUser;
