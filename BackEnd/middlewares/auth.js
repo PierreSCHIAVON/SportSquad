@@ -2,10 +2,10 @@
 require('dotenv').config();
 
 const jwt = require('jsonwebtoken');
-const SECRET_KEY = process.env.SECRET_KEY;
+const SECRET_KEY = process.env.JWT_SECRET;
 
 const verifyToken = (req, res, next) => {
-    const authHeader = req.header('Authorization');
+    const authHeader = req.header('Authorization');  
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(403).json({ message: 'Accès interdit, token manquant' });
     }
@@ -13,7 +13,7 @@ const verifyToken = (req, res, next) => {
     const token = authHeader.split(' ')[1];
     try {
         const decoded = jwt.verify(token, SECRET_KEY);
-        req.user = decoded; // Ajout des infos utilisateur au `req`
+        req.user = decoded;
         next();
     } catch (err) {
         res.status(401).json({ message: 'Token invalide ou expiré' });

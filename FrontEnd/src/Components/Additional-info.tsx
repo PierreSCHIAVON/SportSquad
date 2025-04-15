@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
+import api from "../api/Api";
+import { useNavigate } from 'react-router-dom'; 
 
 const AdditionalInfo: React.FC = () => {
-    const [username, setUsername] = useState("");
+    const [pseudo, setPseudo] = useState("");
     const [sports, setSports] = useState<string[]>([]);
     const [location, setLocation] = useState("");
     const [suggestions, setSuggestions] = useState<string[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
-
+    const navigate = useNavigate();
     const availableSports = ["Football", "Basketball", "Tennis", "Handball", "Musculation", "Pétanque"];
 
     const handleSportChange = (sport: string) => {
@@ -15,10 +17,34 @@ const AdditionalInfo: React.FC = () => {
         );
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log({ username, sports, location });
+        
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                alert("Vous devez être connecté pour envoyer ces informations.");
+                return;
+            }
+    
+            const payload = {
+                pseudo,
+                sports,
+                location,
+            };
+
+            await api.post('/postAdditionalInfo', payload, {
+                headers: {
+                    Authorization: `Bearer ${token}`, 
+                },
+            });
+            
+            navigate('/');
+        } catch (error: any) {
+            console.error("Erreur lors de l'envoi :", error.response?.data || error.message);
+        }
     };
+    
 
     // Fonction pour récupérer les suggestions de villes
     const fetchLocations = async (query: string) => {
@@ -68,7 +94,6 @@ const AdditionalInfo: React.FC = () => {
                 <h3>Infos supplémentaires</h3>
 
                 <form onSubmit={handleSubmit} className="d-flex flex-column gap-4">
-                    {/* Pseudo */}
                     <div>
                         <label htmlFor="username" className="form-label fw-bold">
                             Pseudo:
@@ -77,8 +102,8 @@ const AdditionalInfo: React.FC = () => {
                             type="text"
                             id="username"
                             className="form-control bg-dark text-white border-0 p-2"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            value={pseudo}
+                            onChange={(e) => setPseudo(e.target.value)}
                             required
                             placeholder="Entrez votre pseudo"
                             style={{ borderRadius: "10px" }}
@@ -86,7 +111,7 @@ const AdditionalInfo: React.FC = () => {
                     </div>
 
                     <div className="d-flex flex-row gap-2">
-                        {/* Sports */}
+
                         <div style={{ flex: "1 1 50%" }}>
                             <label className="form-label fw-bold">Sports :</label>
                             <div className="d-flex flex-wrap gap-2">
@@ -104,7 +129,6 @@ const AdditionalInfo: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* Localisation avec auto-complétion et debounce */}
                         <div style={{ flex: "1 1 50%" }} className="ms-4 position-relative">
                             <label htmlFor="location" className="form-label fw-bold">
                                 Localisation:
@@ -124,12 +148,12 @@ const AdditionalInfo: React.FC = () => {
                             />
                             {suggestions.length > 0 && (
                                 <ul
-                                    className="list-group position-absolute w-100"
-                                    style={{
+                                    className="list-group position-absolute w-100 overflow-auto"
+                                    style={{ 
+                                        maxHeight: "200px",
                                         zIndex: 10,
-                                        backgroundColor: "#333",
-                                        borderRadius: "10px",
-                                        overflow: "hidden",
+                                        backgroundColor: "#333", 
+                                        borderRadius: "10px"
                                     }}
                                 >
                                     {suggestions.map((suggestion, index) => (
@@ -150,13 +174,15 @@ const AdditionalInfo: React.FC = () => {
                         </div>
                     </div>
 
-                    <button
-                        type="submit"
-                        className="btn btn-primary w-100 p-2 fw-bold"
-                        style={{ borderRadius: "10px", fontSize: "18px" }}
-                    >
-                        Valider
-                    </button>
+                    <div className="d-flex justify-content-end">
+                        <button
+                            type="submit"
+                            className="btn btn-outline-primary p-2 fw-bold rounded-pill w-25"
+                        >
+                            Valider
+                        </button>
+                    </div>
+
                 </form>
             </div>
         </div>

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { validateRegister, validateLogin } = require('./middlewares/validator.js');
+const verifyToken = require('./middlewares/auth.js').verifyToken;
 
 const userController = require('./controllers/userController');
 const eventController = require('./controllers/eventsController');
@@ -249,5 +250,6 @@ router.put('/updateUser/:id', userController.updateUser);
 router.get('/getEvents', eventController.getAllEvents);
 router.post('/login', authController.loginUser)
 router.post('/register', validateRegister, userController.createUser);
+router.post('/postAdditionalInfo', verifyToken, userController.postAdditionalInfo);
 
 module.exports = router;

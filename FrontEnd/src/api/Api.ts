@@ -11,4 +11,12 @@ export const post = (url: string, data: unknown) => api.post(url, data);
 export const put = (url: string, data: unknown) => api.put(url, data);
 export const del = (url: string) => api.delete(url);
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export default api;
