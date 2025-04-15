@@ -31,11 +31,13 @@ const LoginPage = () => {
         try {
             const endpoint = isLogin ? '/login' : '/register';
             const response = await api.post(endpoint, { email, password });
-
+            
             if (isLogin) {
                 localStorage.setItem('token', response.data.token);
                 if(response.data.newAccount) {
                     navigate('/login/additional-info', { state: { email } });
+                } else {
+                    navigate('/');
                 }
             } else {
                 setIsLogin(true);
