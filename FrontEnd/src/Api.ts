@@ -22,7 +22,7 @@ export const getSportById = async (id: string) => {
     }
 };
 
-export const createSport = async (sport: any) => {
+export const createSport = async (sport: number) => {
     try {
         const response = await axios.post(`${API_URL}/sports`, sport);
         return response.data;
@@ -32,7 +32,7 @@ export const createSport = async (sport: any) => {
     }
 };
 
-export const updateSport = async (id: string, sport: any) => {
+export const updateSport = async (id: string, sport: object) => {
     try {
         const response = await axios.put(`${API_URL}/sports/${id}`, sport);
         return response.data;
@@ -72,7 +72,7 @@ export const getEventById = async (id: number) => {
     }
 };
 
-export const createEvent = async (event: any) => {
+export const createEvent = async (event: object) => {
     try {
         const response = await axios.post(`${API_URL}/events`, event);
         return response.data;
@@ -82,7 +82,7 @@ export const createEvent = async (event: any) => {
     }
 };
 
-export const updateEvent = async (id: string, event: any) => {
+export const updateEvent = async (id: string, event: object) => {
     try {
         const response = await axios.put(`${API_URL}/events/${id}`, event);
         return response.data;

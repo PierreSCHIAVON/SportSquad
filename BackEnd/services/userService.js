@@ -1,6 +1,8 @@
 const { User } = require('../models'); // Importation du modèle User
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const SECRET = process.env.JWT_SECRET;
 
 const userService = {
     // CREATE: Créer un nouvel utilisateur
@@ -65,16 +67,40 @@ const userService = {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) throw new Error('Mot de passe incorrect');
     
-        const token = jwt.sign({ userId: user.id_user }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user.id_user }, SECRET, { expiresIn: '24h' });
         
         const newAccount = user.pseudo === null;
-        return { token,userId: user.id_user, newAccount };
+        return { token, newAccount };
     },
+
+    async postAdditionalInfo(id, data) {
+        try {
+            const user = await User.findByPk(id);
+            if (!user) {
+                throw new Error("Utilisateur non trouvé");
+            }
+    
+            const { sports, location } = data;
+
+            if (!sports && !location) {
+                throw new Error("Aucune donnée valide pour la mise à jour");
+            }
+
+            const sports_fav = sports ? sports.join(";") : null;
+
+            await user.update({
+                sports_fav, 
+                localisation: location
+            });
+        } catch (error) {
+            throw new Error(`Erreur lors de la mise à jour des informations supplémentaires de l'utilisateur: ${error.message}`);
+        }
+    },
+    
     // Déconnexion (juste une confirmation côté serveur)
     async logout() {
         return { message: 'Déconnexion réussie' };
     },
-
 
 };
 

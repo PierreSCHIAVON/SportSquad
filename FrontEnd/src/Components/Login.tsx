@@ -34,9 +34,9 @@ const LoginPage = () => {
 
             if (isLogin) {
                 localStorage.setItem('token', response.data.token);
-                localStorage.setItem('userId', response.data.userId);
-                if (response.data.newAccount) {
-                    navigate('login/additional-info', { state: { email } });}
+                if(response.data.newAccount) {
+                    navigate('/login/additional-info', { state: { email } });
+                }
             } else {
                 setIsLogin(true);
             }
