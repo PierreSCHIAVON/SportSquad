@@ -19,8 +19,10 @@ const RightSidebar: React.FC = () => {
         padding: "10px",
       }}
     >
-      {/* Contenu de la RightSidebar */}
-      Right Sidebar
+      <div className="p-4">
+        <span className="fs-4">A venir</span>
+      </div>
+    
     </Box>
   );
 };

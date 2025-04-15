@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getParticipationsByUserId } from "../Api.tsx";
+import { getParticipations } from "../Api.tsx";
 import React from "react";
 
 
@@ -11,8 +11,8 @@ const MyParticipationsPage: React.FC = () => {
     useEffect(() => {
         const fetchParticipations = async () => {
             try {
-                const data = await getParticipationsByUserId();
-                setParticipations(data); // On met à jour les participations récupérées
+                const data = await getParticipations("old");
+                setParticipations(data); 
             } catch (err) {
                 setError("Impossible de récupérer les participations.");
                 console.error(err);
@@ -28,17 +28,34 @@ const MyParticipationsPage: React.FC = () => {
     if (error) return <p className="text-danger">{error}</p>;
 
     return (
-        <div className="container">
-            <h2>Mes participations</h2>
-            <ul>
-                {participations.map((participation, index) => (
-                    <li key={index}>
-                        <p><strong>Événement :</strong> {participation.eventName}</p>
-                        <p><strong>Date :</strong> {new Date(participation.eventDate).toLocaleDateString()}</p>
-                    </li>
-                ))}
-            </ul>
+        <div className="container py-4">
+            <h2 className="mb-4">Mes participations</h2>
+            {participations.length === 0 ? (
+                <div className="text-center text-muted py-5">
+                    <p className="fs-5">Vous n'avez pas encore participé à un événement.</p>
+                </div>
+            ) : (
+                <div className="row g-4">
+                    {participations.map((participation, index) => (
+                        <div key={index} className="col-md-6 col-lg-4">
+                            <div className="card h-100 border-0 rounded-4 text-white bg-dark bg-gradient" style={{ background: "linear-gradient(to bottom, #e9ecef, #212529)" }}>
+                                <div className="card-body">
+                                    <h5 className="card-title fw-bold">{participation.evenement.sport}</h5>
+                                    <p className="card-text mb-1">
+                                        {new Date(participation.evenement.date_debut).toLocaleDateString()}
+                                    </p>
+                                    <p className="card-text">
+                                        {participation.evenement.localisation}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
         </div>
+
     );
 };
 

@@ -44,9 +44,6 @@ const EventPage: React.FC = () => {
 
     const handleParticipation = async () => {
         const userId = localStorage.getItem('userId');
-        console.log("User ID récupéré depuis localStorage :", userId);
-
-        console.log("→ handleParticipation appelée");
 
         if (!event || !userId) {
             console.log("❌ Données manquantes", { event, userId });
@@ -59,10 +56,9 @@ const EventPage: React.FC = () => {
                 id_evenement: event.id_evenement,
             };
 
-            const data = await createParticipationWithUserId(userId, participationData);
+            await createParticipationWithUserId(userId, participationData);
 
             alert("Participation enregistrée !");
-            console.log("✅ Nouvelle participation :", data);
 
             setSuccessMessage("Vous êtes inscrit à l'événement !");
         } catch (err: any) {
@@ -77,7 +73,7 @@ const EventPage: React.FC = () => {
     if (!event) return <p>Aucun événement trouvé.</p>;
 
     return (
-        <div className="container">
+        <div className="container p-4">
             <h2>{event.sport.charAt(0).toUpperCase() + event.sport.slice(1).toLowerCase()}</h2>
             <p><strong>Description:</strong> {event.description_event}</p>
             <p><strong>Localisation:</strong> {event.localisation}</p>

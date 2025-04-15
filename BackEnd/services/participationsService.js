@@ -1,5 +1,5 @@
-const { Participation } = require('../models'); // Importation du modèle Participation
-
+const { Participation, Evenement } = require('../models'); // Importation du modèle Participation
+const { Op } = require("sequelize");
 const participationService = {
 
     // CREATE: Créer une participation avec un ID utilisateur
@@ -7,7 +7,7 @@ const participationService = {
         try {
             // Assurez-vous que `date_participation` est bien formatée comme une date
             return await Participation.create({
-                id_users: userId,
+                id_user: userId,
                 id_evenement: eventData.id_evenement, // L'ID de l'événement est récupéré de l'événement actuel dans le front-end
                 date_participation: eventData.date_participation, // Date de participation (celle de l'événement)
                 created_at: new Date(), // Date actuelle avec timezone pour `created_at`
@@ -40,10 +40,38 @@ const participationService = {
     },
 
     // READ: Récupérer les participations d'un utilisateur par ID utilisateur
-    async getParticipationsByUserId(userId) {
+    async getOldParticipationsByUserId(userId) {
         try {
-            const participations = await Participation.findAll({ where: { id_user: userId } });
-            if (participations.length === 0) throw new Error("Aucune participation trouvée pour cet utilisateur");
+            const participations = await Participation.findAll({ where: { id_user: userId }, include: [
+                {
+                    model: Evenement,
+                    as: 'evenement',
+                    where: {
+                        date_fin: {
+                            [Op.lt]: new Date(),
+                        },
+                    },
+                }
+            ] });
+            return participations;
+        } catch (error) {
+            throw new Error(`Erreur lors de la récupération des participations de l'utilisateur: ${error.message}`);
+        }
+    },
+
+    async getFutureParticipationsByUserId(userId) {
+        try {
+            const participations = await Participation.findAll({ where: { id_user: userId }, include: [
+                {
+                    model: Evenement,
+                    as: 'evenement',
+                    where: {
+                        date_fin: {
+                            [Op.gt]: new Date(),
+                        },
+                    },
+                }
+            ] });
             return participations;
         } catch (error) {
             throw new Error(`Erreur lors de la récupération des participations de l'utilisateur: ${error.message}`);
