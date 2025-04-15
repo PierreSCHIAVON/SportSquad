@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     date_participation: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
     },
   });
 

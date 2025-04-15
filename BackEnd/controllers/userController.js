@@ -64,9 +64,23 @@ async function updateUser(req, res) {
   }
 }
 
+async function postAdditionalInfo(req, res) {
+  try { 
+      const userId = req.user.id;
+      const data = req.body;
+
+      const updatedUser = await userService.postAdditionalInfo(userId, data);
+
+      return res.status(200).json(updatedUser);
+  } catch (error) {
+      return res.status(500).json({ message: error.message });
+  }
+}
+
 module.exports = {
     getAllUsers,
     getUserById,
     createUser,
-    updateUser
+    updateUser,
+    postAdditionalInfo,
 };

@@ -3,10 +3,23 @@ import { IconButton, Badge } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { HikingRounded } from "@mui/icons-material";
 import logo from "../../assets/sportsquad.png";
+import { useNavigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Header: React.FC = () => {
+  const navigate = useNavigate();
+
+  const logout = () => {
+    // Supprimer le token et l'userId du localStorage
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+
+    // Rediriger l'utilisateur vers la page de connexion
+    navigate("/login");
+  };
+
   const navigate = useNavigate();
 
   return (
@@ -49,6 +62,11 @@ const Header: React.FC = () => {
           onClick={() => navigate("/dashboard/profil")}
         >
           <AccountCircleIcon />
+        </IconButton>
+
+        {/* Bouton de déconnexion */}
+        <IconButton sx={{ color: "#FFAA00" }} onClick={logout}>
+          <HikingRounded />
         </IconButton>
       </div>
     </header>
