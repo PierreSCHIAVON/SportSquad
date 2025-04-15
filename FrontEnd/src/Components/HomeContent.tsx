@@ -4,6 +4,28 @@ import { getEvents } from '../services/eventsService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Evenements from './Events';
 
+const getSportIcon = (sport: string): string => {
+    switch (sport.toLowerCase()) {
+        case 'football':
+            return 'https://cdn-icons-png.flaticon.com/512/861/861512.png';
+        case 'tennis':
+            return 'https://cdn-icons-png.flaticon.com/512/6057/6057897.png';
+        case 'basketball':
+            return 'https://cdn-icons-png.flaticon.com/512/861/861499.png';
+        case 'handball':
+            return 'https://cdn-icons-png.flaticon.com/512/3534/3534026.png';
+        case 'musculation':
+        case 'fitness':
+        case 'gym':
+            return 'https://cdn-icons-png.flaticon.com/512/2331/2331970.png';
+        case 'pétanque':
+            return 'https://cdn-icons-png.flaticon.com/512/8096/8096676.png';
+        default:
+            return 'https://cdn-icons-png.flaticon.com/512/727/727399.png'; // une icône générique
+    }
+};
+
+
 interface Event {
     id_evenement: number;
     id_user: number;
@@ -20,14 +42,14 @@ interface Event {
 const HomeContent: React.FC = () => {
     const [events, setEvents] = useState<Event[]>([]);
         const navigate = useNavigate();
-        const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false); // Simule l'état d'authentification
+        const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
         useEffect(() => {
             // Vérifiez si l'utilisateur est connecté
             const checkAuthentication = () => {
-                const token = localStorage.getItem('token'); // Exemple : vérifiez un token dans le localStorage
+                const token = localStorage.getItem('token');
                 if (!token) {
-                    navigate('/login'); // Redirigez vers /register si non connecté
+                    navigate('/login');
                 } else {
                     setIsAuthenticated(true);
                 }
@@ -48,15 +70,47 @@ const HomeContent: React.FC = () => {
         }, [isAuthenticated]);
 
     return (
-        <div className="container p-4">
-            <section className="mb-4">
-                <h4 className="text-center">Évènements recommandés d'après vos informations</h4>
-                <div style={{overflowY: 'auto', overflowX: 'hidden' }} className="mt-3 mt-4 py-4 px-4">
-                    <Evenements events={events} />
+        <div className="container mt-5">
+            <section className="mb-5">
+                <h2 className="text-center mb-4">Événements à venir</h2>
+                <div className="row gy-4">
+                    {events.map((event) => (
+                        <div key={event.id_evenement} className="col-12">
+                            <div
+                                onClick={() => navigate(`/dashboard/event/${event.id_evenement}`)}
+                                className="d-flex justify-content-between align-items-center p-4 rounded"
+                                style={{ backgroundColor: '#d9d9d9', cursor: 'pointer' }}
+                            >
+                                <div className="flex-grow-1">
+                                    <p className="fw-bold text-uppercase mb-1">{event.sport}</p>
+                                    <h3 className="fw-bold text-warning">ÉVÉNEMENT</h3>
+                                    <p className="text-muted text-uppercase small">Organisé par utilisateur #{event.id_user}</p>
+                                    <div className="d-flex flex-wrap mt-3 gap-4">
+                                        <div>
+                                            <p className="text-muted text-uppercase small mb-0">Date</p>
+                                            <p className="fw-bold mb-0">{new Date(event.date_debut).toLocaleDateString()}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-muted text-uppercase small mb-0">Heure</p>
+                                            <p className="fw-bold mb-0">{new Date(event.date_debut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-muted text-uppercase small mb-0">Lieu</p>
+                                            <p className="fw-bold mb-0">{event.localisation}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <img src={getSportIcon(event.sport)} alt={event.sport} style={{ width: '100px', height: 'auto' }} />
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </section>
         </div>
     );
+
 };
 
 export default HomeContent;
