@@ -24,7 +24,7 @@ async function getAllParticipations(req, res) {
 // Fonction pour récupérer une participation par ID
 async function getParticipationById(req, res) {
     try {
-        const { id } = req.params;
+        const id  = req.user.id;
         const participation = await participationService.getParticipationById(id);
 
         if (!participation) {
@@ -38,14 +38,21 @@ async function getParticipationById(req, res) {
 }
 
 // Fonction pour récupérer les participations d'un utilisateur par ID utilisateur
-async function getParticipationsByUserId(req, res) {
+async function getOldParticipationsByUserId(req, res) {
     try {
-        const { userId } = req.params;
-        const participations = await participationService.getParticipationsByUserId(userId);
+        const userId = req.user.id;
+        const participations = await participationService.getOldParticipationsByUserId(userId);
 
-        if (participations.length === 0) {
-            return res.status(404).json({ error: "Aucune participation trouvée pour cet utilisateur" });
-        }
+        res.status(200).json(participations);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+async function getFutureParticipationsByUserId(req, res) {
+    try {
+        const userId = req.user.id;
+        const participations = await participationService.getFutureParticipationsByUserId(userId);
 
         res.status(200).json(participations);
     } catch (error) {
@@ -89,7 +96,8 @@ module.exports = {
     createParticipationWithUserId,
     getAllParticipations,
     getParticipationById,
-    getParticipationsByUserId,
+    getOldParticipationsByUserId,
     updateParticipation,
-    deleteParticipation
+    deleteParticipation,
+    getFutureParticipationsByUserId,
 };

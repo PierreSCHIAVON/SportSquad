@@ -38,8 +38,8 @@ const SearchPage: React.FC = () => {
 
     return (
         <div className="container">
-                <section className="mb-4">
-                    <h2 className="text-center">Rechercher un événement</h2>
+                <section className="mb-4 p-4">
+                    <h2 className="text-center mb-4">Rechercher un événement</h2>
                     <input
                         type="text"
                         className="form-control mb-3"

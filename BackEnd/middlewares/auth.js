@@ -6,6 +6,7 @@ const SECRET_KEY = process.env.JWT_SECRET;
 
 const verifyToken = (req, res, next) => {
     const authHeader = req.header('Authorization');  
+    
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(403).json({ message: 'Accès interdit, token manquant' });
     }

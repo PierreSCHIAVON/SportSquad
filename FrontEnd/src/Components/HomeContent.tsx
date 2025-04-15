@@ -48,10 +48,12 @@ const HomeContent: React.FC = () => {
         }, [isAuthenticated]);
 
     return (
-        <div className="container">
+        <div className="container p-4">
             <section className="mb-4">
-                <h2 className="text-center">A venir</h2>
-                <Evenements events={events} />
+                <h4 className="text-center">Évènements recommandés d'après vos informations</h4>
+                <div style={{overflowY: 'auto', overflowX: 'hidden' }} className="mt-3 mt-4 py-4 px-4">
+                    <Evenements events={events} />
+                </div>
             </section>
         </div>
     );

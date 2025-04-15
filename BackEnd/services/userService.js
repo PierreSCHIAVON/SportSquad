@@ -80,7 +80,7 @@ const userService = {
                 throw new Error("Utilisateur non trouvé");
             }
     
-            const { sports, location } = data;
+            const { sports, location, pseudo } = data;
 
             if (!sports && !location) {
                 throw new Error("Aucune donnée valide pour la mise à jour");
@@ -90,13 +90,14 @@ const userService = {
 
             await user.update({
                 sports_fav, 
-                localisation: location
+                localisation: location,
+                pseudo: pseudo,
             });
         } catch (error) {
             throw new Error(`Erreur lors de la mise à jour des informations supplémentaires de l'utilisateur: ${error.message}`);
         }
     },
-    
+
     // Déconnexion (juste une confirmation côté serveur)
     async logout() {
         return { message: 'Déconnexion réussie' };

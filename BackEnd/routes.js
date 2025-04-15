@@ -254,6 +254,8 @@ router.post('/events', verifyToken, eventController.createEvent);
 router.post('/login', authController.loginUser)
 router.post('/register', validateRegister, userController.createUser);
 router.post('/postAdditionalInfo', verifyToken, userController.postAdditionalInfo);
-router.post('/participations/user/:userId', participationController.createParticipationWithUserId);
+router.post('/participations',  participationController.createParticipationWithUserId);
+router.get('/participations/old', verifyToken, participationController.getOldParticipationsByUserId);
+router.get('/participations/future', verifyToken, participationController.getFutureParticipationsByUserId);
 
 module.exports = router;

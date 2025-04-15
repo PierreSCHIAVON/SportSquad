@@ -9,8 +9,9 @@ import ProfilUser from './Components/ProfilUser.tsx';
 import LoginPage from "./Components/Login";
 import AdditionalInfo from "./Components/Additional-info";
 import PrivateRoute from "./Components/PrivateRoutes";
-import EventPage from "./Components/EventPage.tsx"; // Import du composant
+import EventPage from "./Components/EventPage.tsx"; 
 import CreateEvent from "./Components/CreateEvent.tsx";
+import MyParticipationsPage from "./Components/MyParticipationsPage.tsx"; 
 
 const App: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ const App: React.FC = () => {
             <Route path="conditions-utilisation" element={<ConditionsUtilisation />} />
             <Route path="/event/:id" element={<EventPage />} />
             <Route path="create-event" element={<CreateEvent />} />
+            <Route path="myparticipations" element={<MyParticipationsPage />} />
           </Route>
           
         </Route>
