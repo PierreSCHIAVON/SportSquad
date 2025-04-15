@@ -25,7 +25,7 @@ const getUserIdFromToken = (): number | null => {
   try {
     const decoded: any = jwtDecode(token);
     console.log(decoded);
-    return decoded.userId;
+    return decoded.id;
   } catch (error) {
     console.error("Erreur lors du décodage du token", error);
     return null;

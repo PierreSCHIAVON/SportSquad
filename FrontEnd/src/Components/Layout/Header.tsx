@@ -6,7 +6,6 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { HikingRounded } from "@mui/icons-material";
 import logo from "../../assets/sportsquad.png";
 import { useNavigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -15,12 +14,9 @@ const Header: React.FC = () => {
     // Supprimer le token et l'userId du localStorage
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
-
     // Rediriger l'utilisateur vers la page de connexion
     navigate("/login");
   };
-
-  const navigate = useNavigate();
 
   return (
     <header
