@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { validateRegister, validateLogin } = require('./middlewares/validator.js');
+const verifyToken = require('./middlewares/auth.js').verifyToken;
 
 const userController = require('./controllers/userController');
 const eventController = require('./controllers/eventsController');
 const authController = require('./controllers/authController.js');
+const participationController = require('./controllers/participationsController');
 
 /**
  * @swagger
@@ -285,7 +287,13 @@ router.put('/updateUserPass/:id', userController.updateUserPass);
  *                     description: Date de l'événement
  */
 router.get('/getEvents', eventController.getAllEvents);
+router.get('/events/:id', eventController.getEventById);
+router.post('/events', verifyToken, eventController.createEvent);
 router.post('/login', authController.loginUser)
 router.post('/register', validateRegister, userController.createUser);
+router.post('/postAdditionalInfo', verifyToken, userController.postAdditionalInfo);
+router.post('/participations',  participationController.createParticipationWithUserId);
+router.get('/participations/old', verifyToken, participationController.getOldParticipationsByUserId);
+router.get('/participations/future', verifyToken, participationController.getFutureParticipationsByUserId);
 
 module.exports = router;

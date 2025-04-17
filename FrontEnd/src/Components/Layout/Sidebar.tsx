@@ -25,17 +25,26 @@ const Sidebar: React.FC = () => {
       }}
     >
       {/* Icônes */}
-      <Box>
+      <Box className="d-flex flex-column align-items-center">
         <IconButton sx={{ marginBottom: "20px", color: "#FFAA00" }} href='/'>
           <HomeIcon fontSize="large" />
         </IconButton>
-        <IconButton sx={{ marginBottom: "20px", color: "#FFAA00" }}>
+        <IconButton
+          sx={{ marginBottom: "20px", color: "#FFAA00" }}
+          href="/dashboard/create-event"
+        >
           <AddCircleIcon fontSize="large" />
         </IconButton>
-        <IconButton sx={{ marginBottom: "20px", color: "#FFAA00" }} href='/search'>
+        <IconButton
+          sx={{ marginBottom: "20px", color: "#FFAA00" }}
+          href="/dashboard/search"
+        >
           <SearchIcon fontSize="large" />
         </IconButton>
-        <IconButton sx={{ marginBottom: "20px", color: "#FFAA00" }}>
+        <IconButton
+          sx={{ marginBottom: "20px", color: "#FFAA00" }}
+          href="/dashboard/myparticipations"
+        >
           <CalendarTodayIcon fontSize="large" />
         </IconButton>
       </Box>

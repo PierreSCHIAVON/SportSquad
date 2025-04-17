@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
         },
         pseudo: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(250),
             allowNull: true,
         },
         email: {

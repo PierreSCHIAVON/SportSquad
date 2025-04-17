@@ -22,6 +22,7 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.0",
     "pg-hstore": "^2.3.4",
+    "react-router-dom": "^7.4.0",
     "sequelize": "^6.37.4",
     "sequelize-cli": "^6.6.2",
     "swagger-jsdoc": "^6.2.8",

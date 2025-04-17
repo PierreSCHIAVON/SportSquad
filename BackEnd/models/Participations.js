@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    id_users: {
+    id_user: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -25,14 +25,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     date_participation: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
     },
   });
 
   // Associations
   Participation.associate = (models) => {
     Participation.belongsTo(models.User, {
-      foreignKey: "id_users",
+      foreignKey: "id_user",
       as: "participant",
     });
     Participation.belongsTo(models.Evenement, {

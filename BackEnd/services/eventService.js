@@ -2,15 +2,19 @@ const { Evenement } = require('../models'); // Importation du modèle User
 
 const eventService = {
     // CREATE: Créer un nouvel événement
-    async createEvent(data) {
+    async createEvent(userId, data) {
         try {
-            const newEvent = await Evenement.create(data);
+            const newEvent = await Evenement.create({
+                ...data,
+                id_user: userId,
+                etat: 'ouvert',
+            });
             return newEvent;
         } catch (error) {
             throw new Error(`Erreur lors de la création de l'événement: ${error.message}`);
         }
-    },
-
+    },    
+    
     // READ: Récupérer tous les événements
     async getAllEvents() {
         try {
