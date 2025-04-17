@@ -54,7 +54,7 @@ const eventService = {
                 include: [{
                     model: User,
                     as: 'organisateur',
-                    attributes: ['prenom', 'nom']
+                    attributes: ['pseudo']
                 }],
                 raw: true,
                 nest: true
@@ -62,7 +62,7 @@ const eventService = {
             
             const formattedEvents = events.map(event => ({
                 ...event,
-                organisateur: event.organisateur ? `${event.organisateur.prenom} ${event.organisateur.nom}` : 'Inconnu'
+                organisateur: event.organisateur ? event.organisateur.pseudo : 'Inconnu'
             }));
             
             return formattedEvents;
@@ -116,7 +116,7 @@ const eventService = {
                 include: [{
                     model: User,
                     as: 'organisateur',
-                    attributes: ['prenom', 'nom']
+                    attributes: ['pseudo']
                 }],
                 raw: true,
                 nest: true
@@ -124,7 +124,7 @@ const eventService = {
             
             const formattedEvents = events.map(event => ({
                 ...event,
-                organisateur: event.organisateur ? `${event.organisateur.prenom} ${event.organisateur.nom}` : 'Inconnu'
+                organisateur: event.organisateur ? event.organisateur.pseudo : 'Inconnu'
             }));
             
             return formattedEvents;

@@ -43,11 +43,56 @@ const Header: React.FC = () => {
       />
       <div className="d-flex align-items-center">
         {/* Notification */}
-        <IconButton sx={{ color: "#FFAA00", margin: "0 8px" }}>
-          <Badge badgeContent={4} color="error">
-        <NotificationsIcon sx={{ fontSize: 26 }} />
-          </Badge>
-        </IconButton>
+        <Box sx={{ position: 'relative' }}>
+          <IconButton 
+            sx={{ color: "#FFAA00", margin: "0 8px" }}
+            onClick={() => {
+              const panel = document.getElementById('notification-panel');
+              if (panel) {
+                panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
+              }
+            }}
+          >
+            <Badge badgeContent={3} color="error">
+              <NotificationsIcon sx={{ fontSize: 26 }} />
+            </Badge>
+          </IconButton>
+          
+          <Box
+            id="notification-panel"
+            sx={{
+              display: 'none',
+              position: 'absolute',
+              top: '45px',
+              right: 0,
+              width: '300px',
+              maxHeight: '400px',
+              backgroundColor: 'white',
+              borderRadius: '8px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+              padding: '12px',
+              zIndex: 1000,
+              flexDirection: 'column',
+              gap: '8px',
+              overflow: 'auto'
+            }}
+          >
+            <Box sx={{ fontWeight: 'bold', color: '#333', mb: 1, borderBottom: '1px solid #eee', pb: 1 }}>
+              Notifications
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <Box sx={{ p: 1, borderRadius: '4px', backgroundColor: '#f5f5f5', color: '#333', fontSize: '14px' }}>
+                <strong>Nouvel événement</strong>: Match de football ce week-end !
+              </Box>
+              <Box sx={{ p: 1, borderRadius: '4px', backgroundColor: '#f5f5f5', color: '#333', fontSize: '14px' }}>
+                <strong>Rappel</strong>: Votre entraînement commence dans 1 heure.
+              </Box>
+              <Box sx={{ p: 1, borderRadius: '4px', backgroundColor: '#f5f5f5', color: '#333', fontSize: '14px' }}>
+                <strong>Pierre</strong> a rejoint votre événement de basketball.
+              </Box>
+            </Box>
+          </Box>
+        </Box>
 
         {/* Bouton + pour créer un événement */}
         <IconButton

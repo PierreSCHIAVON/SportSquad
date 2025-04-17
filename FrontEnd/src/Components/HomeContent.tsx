@@ -78,7 +78,9 @@ const HomeContent: React.FC = () => {
                                 <div
                                     onClick={() => navigate(`/dashboard/event/${event.id_evenement}`)}
                                     className="d-flex justify-content-between align-items-center p-4 border-0 rounded-4"
-                                    style={{ backgroundColor: '#d9d9d9', cursor: 'pointer' }}
+                                    style={{ backgroundColor: '#d9d9d9', cursor: 'pointer',  transition: "transform 0.2s ease" }}
+                                    onMouseOver={(e) => e.currentTarget.style.transform = "translateY(-3px)"}
+                                    onMouseOut={(e) => e.currentTarget.style.transform = "translateY(0)"}
                                 >
                                     <div className="flex-grow-1">
                                         <p className="fw-bold text-uppercase mb-1">{event.sport}</p>
