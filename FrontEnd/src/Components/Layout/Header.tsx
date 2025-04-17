@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton, Badge } from "@mui/material";
+import { IconButton, Badge, Box } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -34,10 +34,12 @@ const Header: React.FC = () => {
         boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
       }}
     >
-      <img
+      <Box
+        component="img"
         src={logo}
         alt="Sport Squad Logo"
-        style={{ height: "75px", marginLeft: "-12px" }}
+        sx={{ height: "75px", marginLeft: "-12px", cursor: "pointer" }}
+        onClick={() => navigate("/dashboard")}
       />
       <div style={{ display: "flex", alignItems: "center" }}>
         {/* Notification */}
@@ -48,7 +50,10 @@ const Header: React.FC = () => {
         </IconButton>
 
         {/* Bouton + pour créer un événement */}
-        <IconButton sx={{ color: "#FFAA00" }}>
+        <IconButton
+          sx={{ color: "#FFAA00" }}
+          onClick={() => navigate("/dashboard/create-event")}
+        >
           <AddCircleIcon />
         </IconButton>
 
