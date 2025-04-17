@@ -83,14 +83,14 @@ const userService = {
     return { token, newAccount };
   },
 
-  async postAdditionalInfo(id, data) {
-    try {
-      const user = await User.findByPk(id);
-      if (!user) {
-        throw new Error("Utilisateur non trouvé");
-      }
-
-      const { sports, location, pseudo } = data;
+    async postAdditionalInfo(id, data) {
+        try {
+            const user = await User.findByPk(id);
+            if (!user) {
+                throw new Error("Utilisateur non trouvé");
+            }
+    
+            const { sports, location, pseudo } = data;
 
       if (!sports && !location) {
         throw new Error("Aucune donnée valide pour la mise à jour");
@@ -98,22 +98,21 @@ const userService = {
 
       const sports_fav = sports ? sports.join(";") : null;
 
-      await user.update({
-        sports_fav,
-        localisation: location,
-        pseudo: pseudo,
-      });
-    } catch (error) {
-      throw new Error(
-        `Erreur lors de la mise à jour des informations supplémentaires de l'utilisateur: ${error.message}`
-      );
-    }
-  },
+            await user.update({
+                sports_fav, 
+                localisation: location,
+                pseudo: pseudo,
+            });
+        } catch (error) {
+            throw new Error(`Erreur lors de la mise à jour des informations supplémentaires de l'utilisateur: ${error.message}`);
+        }
+    },
 
-  // Déconnexion (juste une confirmation côté serveur)
-  async logout() {
-    return { message: "Déconnexion réussie" };
-  },
+    // Déconnexion (juste une confirmation côté serveur)
+    async logout() {
+        return { message: 'Déconnexion réussie' };
+    },
+
 };
 
 module.exports = userService;

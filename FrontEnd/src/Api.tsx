@@ -102,15 +102,26 @@ export const deleteEvent = async (id: string) => {
     }
 };
 
-export const getParticipations = async () => {
+export const getParticipations = async (timeParam: string) => {
     try {
-        const response = await axios.get(`${API_URL}/participations`);
+        const token = localStorage.getItem('token');
+        if (!token) {
+            throw new Error("Aucun token trouvé, l'utilisateur doit être connecté.");
+        }
+
+        const response = await axios.get(`${API_URL}/participations/${timeParam}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
         return response.data;
     } catch (error) {
-        console.error('Error fetching participations:', error);
+        console.error('Erreur lors de la récupération des participations :', error);
         throw error;
     }
 };
+
 
 export const getParticipationById = async (id: string) => {
     try {
@@ -118,18 +129,6 @@ export const getParticipationById = async (id: string) => {
         return response.data;
     } catch (error) {
         console.error(`Error fetching participation with id ${id}:`, error);
-        throw error;
-    }
-};
-
-export const getParticipationsByUserId = async () => {
-    const userId = localStorage.getItem('userId');
-
-    try {
-        const response = await axios.get(`${API_URL}/participations/user/${userId}`);
-        return response.data;
-    } catch (error) {
-        console.error(`Erreur lors de la récupération des participations pour l'utilisateur ${userId}:`, error);
         throw error;
     }
 };

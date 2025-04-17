@@ -25,8 +25,8 @@ const Sidebar: React.FC = () => {
       }}
     >
       {/* Icônes */}
-      <Box>
-        <IconButton sx={{ marginBottom: "20px", color: "#FFAA00" }} href="/">
+      <Box className="d-flex flex-column align-items-center">
+        <IconButton sx={{ marginBottom: "20px", color: "#FFAA00" }} href='/'>
           <HomeIcon fontSize="large" />
         </IconButton>
         <IconButton

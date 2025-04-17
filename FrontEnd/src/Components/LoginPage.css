@@ -1,0 +1,73 @@
+
+.login-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #FFAA00;
+}
+
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.sport {
+    color: #FFAA00;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+
+.squad {
+    color: #000000;
+}
+
+
+.login-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+}
+
+
+.input-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.input-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.5rem 0.5rem 0.5rem 2rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+.login-button {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}

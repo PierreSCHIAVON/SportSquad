@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-// import "./App.css";
+/* import "./App.css"; */
 import Layout from "./Components/Layout.tsx";
 import Body from "./Components/Layout/Body.tsx";
 import About from "./Components/Layout/About.tsx";
@@ -11,6 +11,7 @@ import AdditionalInfo from "./Components/Additional-info";
 import PrivateRoute from "./Components/PrivateRoutes";
 import EventPage from "./Components/EventPage.tsx";
 import CreateEvent from "./Components/CreateEvent.tsx";
+import MyParticipationsPage from "./Components/MyParticipationsPage.tsx";
 import LandingPage from "./Components/LandingPage.tsx";
 
 const App: React.FC = () => {
@@ -45,6 +46,7 @@ const App: React.FC = () => {
             <Route path="profil" element={<ProfilUser />} />
             <Route path="event/:id" element={<EventPage />} />
             <Route path="create-event" element={<CreateEvent />} />
+            <Route path="myparticipations" element={<MyParticipationsPage />} />
             <Route
               path="conditions-utilisation"
               element={<ConditionsUtilisation />}
