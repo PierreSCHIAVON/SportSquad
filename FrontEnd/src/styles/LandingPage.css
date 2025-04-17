@@ -340,6 +340,12 @@ background-color: rgb(255, 255, 255);
     width: 250px;
 }
 
+.separator .title{
+    top:auto;
+    bottom:auto;
+    margin-top: 9vh;
+}
+
 .videosection{
     width: 100%;
 }
