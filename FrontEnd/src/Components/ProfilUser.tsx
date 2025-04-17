@@ -83,7 +83,9 @@ const ProfilUser: React.FC = () => {
   const isOwnProfile = getUserIdFromToken() === user.id_user;
 
   return (
-    <div className="container">
+    <div className="container" style={{
+      maxHeight: 'calc(100vh - 100px)',
+      overflowY: 'auto'}}>
       <UserInfos user={user} isOwnProfile={isOwnProfile} />
     </div>
   );
