@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { updateUser } from "../../services/userService";
+import React, { useState } from 'react';
+import { updateUser,updateUserPass } from '../../services/userService';
 import {
   Autocomplete,
   Avatar,
@@ -41,6 +41,11 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
   const [editing, setEditing] = useState(false);
   const [updatedUser, setUpdatedUser] = useState<User>(user);
   const [updatingPass, updatePassword] = useState(false);
+  const [passwords, setPasswords] = useState({
+    actualpassword: "",
+    newpassword: "",
+    newpasswordverif: "",
+  });
 
   // Convertir la chaîne de sports favoris en tableau pour l'autocomplétion
   const [selectedSports, setSelectedSports] = useState<string[]>(
@@ -50,7 +55,7 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
   );
 
   // Fonction pour gérer les changements des champs du formulaire user
-  const handleChange = (
+  const handleChangeUser = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
@@ -58,7 +63,17 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
       ...prevState,
       [name]: value,
     }));
+
   };
+
+  const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setPasswords((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  
 
   // Fonction pour gérer les changements des sports favoris
   const handleSportsChange = (
@@ -97,12 +112,38 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
     e.preventDefault();
     setError(null); // Réinitialiser l'erreur avant la requête
 
+    const { actualpassword, newpassword, newpasswordverif } = passwords;
+
+    // Vérifier que l'ancien mot de passe est rempli
+    if (!actualpassword) {
+        setError("Veuillez entrer votre mot de passe actuel.");
+        return;
+    }
+
+    // Vérifier que le nouveau mot de passe et la confirmation sont identiques
+    if (newpassword !== newpasswordverif) {
+        setError("Les nouveaux mots de passe ne correspondent pas.");
+        return;
+    }
+
+    // Vérifier la complexité du mot de passe (au moins 8 caractères, une majuscule, une minuscule, un chiffre)
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(newpassword)) {
+        setError("Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.");
+        return;
+    }
+
+    const passwordData = {
+      actualpassword,
+      newpassword
+    };
+
     try {
-      //await UpdatePass(user.id_user, updatedPassword);
-      //console.log('Mot de passe mis à jour avec succès');
-      setError("La mise a jour n'est pas implémenté"); //a supprimer quand fonction implémenté
-      //updatePassword(false);
-      //window.location.reload();
+        await updateUserPass(user.id_user, passwordData);
+        console.log('Mot de passe mis à jour avec succès');
+        //setError("La mise à jour n'est pas implémentée"); // À supprimer quand la fonction sera prête
+        updatePassword(false);
+        window.location.reload();
     } catch (err) {
       setError(
         "Une erreur est survenue lors de la mise à jour. Veuillez réessayer."
@@ -245,7 +286,7 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
                     name={field.name}
                     type={field.type || "text"}
                     value={updatedUser[field.name as keyof User]}
-                    onChange={handleChange}
+                    onChange={handleChangeUser}
                   />
                 </Grid>
               ))}
@@ -321,7 +362,8 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
                     label={field.label}
                     name={field.name}
                     type={field.type}
-                    onChange={handleChange}
+                    onChange={handleChangePassword}
+                    value={passwords[field.name as keyof typeof passwords]}
                   />
                 </Grid>
               ))}
