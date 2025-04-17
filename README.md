@@ -1,4 +1,4 @@
-# 🏀 SportSquad
+# SportSquad
 
 **SportSquad** est une plateforme web qui permet aux passionnés de sport de :
 
@@ -20,11 +20,11 @@
 
 ##  Fonctionnalités clés
 
-- 🗺️ Carte interactive avec géolocalisation
-- 🗓️ Gestion du calendrier des événements
-- 🧾 Formulaire de création d'événements
-- 🧑‍🤝‍🧑 Système de participation et d'évaluation
-- 🔐 Authentification sécurisée (JWT)
+-  Carte interactive avec géolocalisation
+-  Gestion du calendrier des événements
+-  Formulaire de création d'événements
+-  Système de participation et d'évaluation
+-  Authentification sécurisée (JWT)
 
 ---
 
