@@ -85,11 +85,17 @@ const SearchPage: React.FC = () => {
         setFilteredEvents(results);
     };
 
-    return (
-        <div className="container py-5">
-            <h1 className="text-center fw-bold display-4 mb-4">Bienvenue sur SPORT SQUAD</h1>
+    
+    const handleKeyPress = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    };
 
-            {/* Formulaire de recherche */}
+    return (
+        <div className="container py-4">
+            <h1 className="text-center fw-bold display-4 mb-5">Rechercher un événement</h1>
+
             <div className="row g-3 mb-5 justify-content-center">
                 <div className="col-md-4">
                     <input
@@ -98,6 +104,7 @@ const SearchPage: React.FC = () => {
                         placeholder="Rechercher (lieu, sport...)"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyPress={handleKeyPress}
                     />
                 </div>
 
@@ -106,6 +113,7 @@ const SearchPage: React.FC = () => {
                         className="form-select"
                         value={sportFilter}
                         onChange={(e) => setSportFilter(e.target.value)}
+                        onKeyPress={handleKeyPress}
                     >
                         <option value="">Tous les sports</option>
                         {sportOptions.map((sport) => (
@@ -122,6 +130,7 @@ const SearchPage: React.FC = () => {
                         className="form-control"
                         value={dateFilter}
                         onChange={(e) => setDateFilter(e.target.value)}
+                        onKeyPress={handleKeyPress}
                     />
                 </div>
 
@@ -130,6 +139,7 @@ const SearchPage: React.FC = () => {
                         className="form-select"
                         value={niveauFilter}
                         onChange={(e) => setNiveauFilter(e.target.value)}
+                        onKeyPress={handleKeyPress}
                     >
                         <option value="">Tous niveaux</option>
                         {niveauOptions.map((niveau) => (
@@ -147,13 +157,15 @@ const SearchPage: React.FC = () => {
                 </div>
             </div>
 
-            {/* Résultats */}
-            <div className="row gy-4">
+            <div className="row gy-4" style={{
+                height: 'calc(100vh - 260px)', // Hauteur calculée en fonction de la fenêtre moins l'espace pour les filtres
+                maxHeight: '700px', // Hauteur maximale comme fallback
+                overflowY: 'auto' }}>
                 {filteredEvents.map((event) => (
                     <div key={event.id_evenement} className="col-12">
                         <div
                             onClick={() => navigate(`/dashboard/event/${event.id_evenement}`)}
-                            className="p-4 rounded d-flex justify-content-between align-items-center"
+                            className="p-4 d-flex justify-content-between align-items-center border-0 rounded-4"
                             style={{ backgroundColor: '#d9d9d9', cursor: 'pointer' }}
                         >
                             <div>

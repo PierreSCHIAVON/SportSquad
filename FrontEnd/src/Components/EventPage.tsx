@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
-import {createParticipationWithUserId, getEventById} from "../Api.tsx";
-
+import {createParticipation, getEventById} from "../Api.tsx";
 
 interface Event {
     id_evenement: number;
@@ -43,23 +41,20 @@ const EventPage: React.FC = () => {
     }, [id]);
 
     const handleParticipation = async () => {
-        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('token');
 
-        if (!event || !userId) {
-            console.log("❌ Données manquantes", { event, userId });
+        if (!event || !token) {
+            console.log("Token ou données manquantes", { event, token });
             return;
         }
-
-
+        
         try {
             const participationData = {
                 id_evenement: event.id_evenement,
-            };
+                data_participation: event.date_debut,
+            };  
 
-            await createParticipationWithUserId(userId, participationData);
-
-            alert("Participation enregistrée !");
-
+            await createParticipation(token, participationData);
             setSuccessMessage("Vous êtes inscrit à l'événement !");
         } catch (err: any) {
             console.error("❌ Erreur lors de la participation :", err);
@@ -67,23 +62,43 @@ const EventPage: React.FC = () => {
         }
     };
 
-
     if (isLoading) return <p>Chargement de l'événement...</p>;
     if (error) return <p className="text-danger">{error}</p>;
     if (!event) return <p>Aucun événement trouvé.</p>;
 
     return (
-        <div className="container p-4">
-            <h2>{event.sport.charAt(0).toUpperCase() + event.sport.slice(1).toLowerCase()}</h2>
-            <p><strong>Description:</strong> {event.description_event}</p>
-            <p><strong>Localisation:</strong> {event.localisation}</p>
-            <p><strong>Date:</strong> {new Date(event.date_debut).toLocaleDateString()} - {new Date(event.date_fin).toLocaleDateString()}</p>
-            <p><strong>Participants max:</strong> {event.nb_max_participants}</p>
-
-            {successMessage && <p className="text-success">{successMessage}</p>}
-            <button className="btn btn-primary me-2" onClick={() => navigate(-1)}>Retour</button>
-            <button className="btn btn-success" onClick={handleParticipation}>Participer</button>
-        </div>
+        <div className="p-4">
+            <div className="card shadow-lg mb-4 border-0 rounded-4 w-100">
+                <div className="card-header text-white py-3 bg-black border-0 rounded-top-4"> 
+                    <h2 className="m-0 font-weight-bold" style={{color: "rgb(236, 153, 0)"}}>{event.sport.charAt(0).toUpperCase() + event.sport.slice(1).toLowerCase()}</h2>
+                </div>
+                <div className="card-body border-0 rounded-4">
+                    <div className="mb-3">
+                        <h5 className="text-muted mb-2">Description</h5>
+                        <p className="card-text">{event.description_event}</p>
+                    </div>
+                    <div className="row mb-3">
+                        <div className="col-md-6">
+                            <h5 className="text-muted mb-2">Localisation</h5>
+                            <p className="card-text">{event.localisation}</p>
+                        </div>
+                        <div className="col-md-6">
+                            <h5 className="text-muted mb-2">Participants max</h5>
+                            <p className="card-text">{event.nb_max_participants}</p>
+                        </div>
+                    </div>
+                    <div className="mb-3">
+                        <h5 className="text-muted mb-2">Date</h5>
+                        <p className="card-text">{new Date(event.date_debut).toLocaleDateString()} - {new Date(event.date_fin).toLocaleDateString()}</p>
+                    </div>
+                    {successMessage && <div className="alert alert-success">{successMessage}</div>}
+                </div>
+                <div className="card-footer bg-light d-flex justify-content-between py-3 border-0 rounded-4">
+                    <button className="btn btn-secondary" onClick={() => navigate(-1)}>Retour</button>
+                    <button className="btn btn-success px-4" onClick={handleParticipation}>Participer</button>
+                </div>
+            </div>
+        </div>  
     );
 };
 

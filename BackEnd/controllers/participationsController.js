@@ -3,7 +3,7 @@ const participationService = require('../services/participationsService');
 // Fonction pour créer une participation avec un ID utilisateur
 async function createParticipationWithUserId(req, res) {
     try {
-        const { userId } = req.params;
+        const userId = req.user.id;
         const participation = await participationService.createParticipationWithUserId(userId, req.body);
         res.status(201).json(participation);
     } catch (error) {

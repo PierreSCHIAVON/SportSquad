@@ -5,6 +5,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import SettingsIcon from "@mui/icons-material/Settings";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const Sidebar: React.FC = () => {
   return (
@@ -12,7 +13,7 @@ const Sidebar: React.FC = () => {
       sx={{
         width: "80px",
         backgroundColor: "#ffffff",
-        height: "calc(107.5% - 71px)",
+        height: "calc(100% - 20px)",
         marginTop: "10px",
         marginLeft: "10px",
         borderRadius: "8px",
@@ -46,6 +47,12 @@ const Sidebar: React.FC = () => {
           href="/dashboard/myparticipations"
         >
           <CalendarTodayIcon fontSize="large" />
+        </IconButton>
+        <IconButton
+          sx={{ marginBottom: "20px", color: "#FFAA00" }}
+          href="/dashboard/maps"
+        >
+          <LocationOnIcon fontSize="large" />
         </IconButton>
       </Box>
       <IconButton sx={{ marginTop: "auto", color: "#FFAA00" }}>

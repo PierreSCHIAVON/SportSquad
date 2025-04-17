@@ -5,7 +5,6 @@ const Body: React.FC = () => {
   return (
     <div
       style={{
-        flex: 1,
         padding: "2rem",
         borderRadius: "8px",
         backgroundColor: "#fafafa",
@@ -17,7 +16,6 @@ const Body: React.FC = () => {
           fontFamily: "League Spartan, sans-serif",
           fontSize: "3rem",
           fontWeight: 600,
-          marginBottom: "0rem",
         }}
       >
         Bienvenue sur SPORTSQUAD

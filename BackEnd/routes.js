@@ -167,7 +167,7 @@ router.get('/getUserById/:id', userController.getUserById);
  *                   description: Adresse email de l'utilisateur
  */
 router.post('/addUser', userController.createUser);
-
+router.get('/getUserPosition', verifyToken, userController.getUserPosition);
 /**
  * @swagger
  * /updateUser/{id}:
@@ -286,13 +286,14 @@ router.put('/updateUserPass/:id', userController.updateUserPass);
  *                     format: date
  *                     description: Date de l'événement
  */
-router.get('/getEvents', eventController.getAllEvents);
+router.get('/getEvents', verifyToken, eventController.getAllEvents);
+router.get('/events/position', eventController.getEventsByPosition);
 router.get('/events/:id', eventController.getEventById);
 router.post('/events', verifyToken, eventController.createEvent);
 router.post('/login', authController.loginUser)
 router.post('/register', validateRegister, userController.createUser);
 router.post('/postAdditionalInfo', verifyToken, userController.postAdditionalInfo);
-router.post('/participations',  participationController.createParticipationWithUserId);
+router.post('/participations', verifyToken, participationController.createParticipationWithUserId);
 router.get('/participations/old', verifyToken, participationController.getOldParticipationsByUserId);
 router.get('/participations/future', verifyToken, participationController.getFutureParticipationsByUserId);
 

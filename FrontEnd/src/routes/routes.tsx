@@ -18,7 +18,7 @@ const routes = () => {
             <Route path="/conditions-utilisation" element={<ConditionsUtilisation />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/myparticipations" element={<MyParticipationsPage />} />
-            <Route path="/profil/:userId" element={<ProfilUser />} />
+            <Route path="/profil/:userId" element={<ProfilUser />} />"
         </Routes>
     );
 };

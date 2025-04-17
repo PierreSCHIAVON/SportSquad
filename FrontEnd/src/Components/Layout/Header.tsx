@@ -41,33 +41,33 @@ const Header: React.FC = () => {
         sx={{ height: "75px", marginLeft: "-12px", cursor: "pointer" }}
         onClick={() => navigate("/dashboard")}
       />
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div className="d-flex align-items-center">
         {/* Notification */}
-        <IconButton sx={{ color: "#FFAA00" }}>
+        <IconButton sx={{ color: "#FFAA00", margin: "0 8px" }}>
           <Badge badgeContent={4} color="error">
-            <NotificationsIcon />
+        <NotificationsIcon sx={{ fontSize: 26 }} />
           </Badge>
         </IconButton>
 
         {/* Bouton + pour créer un événement */}
         <IconButton
-          sx={{ color: "#FFAA00" }}
+          sx={{ color: "#FFAA00", margin: "0 8px" }}
           onClick={() => navigate("/dashboard/create-event")}
         >
-          <AddCircleIcon />
+          <AddCircleIcon sx={{ fontSize: 26 }} />
         </IconButton>
 
         {/* Icône de profil */}
         <IconButton
-          sx={{ color: "#FFAA00" }}
+          sx={{ color: "#FFAA00", margin: "0 8px" }}
           onClick={() => navigate("/dashboard/profil")}
         >
-          <AccountCircleIcon />
+          <AccountCircleIcon sx={{ fontSize: 26 }} />
         </IconButton>
 
         {/* Bouton de déconnexion */}
-        <IconButton sx={{ color: "#FFAA00" }} onClick={logout}>
-          <HikingRounded />
+        <IconButton sx={{ color: "#FFAA00", margin: "0 8px" }} onClick={logout}>
+          <HikingRounded sx={{ fontSize: 26 }} />
         </IconButton>
       </div>
     </header>

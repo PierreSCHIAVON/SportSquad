@@ -5,16 +5,15 @@ const participationService = {
     // CREATE: Créer une participation avec un ID utilisateur
     async createParticipationWithUserId(userId, eventData) {
         try {
-            // Assurez-vous que `date_participation` est bien formatée comme une date
             return await Participation.create({
                 id_user: userId,
                 id_evenement: eventData.id_evenement, // L'ID de l'événement est récupéré de l'événement actuel dans le front-end
-                date_participation: eventData.date_participation, // Date de participation (celle de l'événement)
-                created_at: new Date(), // Date actuelle avec timezone pour `created_at`
-                updated_at: new Date(), // Date actuelle avec timezone pour `updated_at`
+                date_participation: eventData.date_participation || new Date(), // Date de participation (celle de l'événement) ou date actuelle si non fournie
+                created_at: new Date(),
+                updated_at: new Date(), 
             });
         } catch (error) {
-            throw new Error(`Erreur lors de l'ajout de la participation avec user ID: ${error.message}`);
+            throw new Error(`Erreur lors de l'ajout de la participation: ${error.message}`);
         }
     },
 
