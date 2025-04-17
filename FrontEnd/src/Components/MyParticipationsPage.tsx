@@ -37,8 +37,8 @@ const MyParticipationsPage: React.FC = () => {
             ) : (
                 <div className="row g-4">
                     {participations.map((participation, index) => (
-                        <div key={index} className="col-md-6 col-lg-4">
-                            <div className="card h-100 border-0 rounded-4 text-white bg-dark bg-gradient" style={{ background: "linear-gradient(to bottom, #e9ecef, #212529)" }}>
+                        <div key={index} className="col">
+                            <div className="card h-100 border-0 rounded-4 text-dark" style={{ backgroundColor: '#d9d9d9', cursor: 'pointer' }}>
                                 <div className="card-body">
                                     <h5 className="card-title fw-bold">{participation.evenement.sport}</h5>
                                     <p className="card-text mb-1">

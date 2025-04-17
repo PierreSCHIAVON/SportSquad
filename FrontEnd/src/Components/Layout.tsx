@@ -16,7 +16,9 @@ const Layout: React.FC = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        height: "100vh",
+        height: "100vh", // Hauteur fixe à toute la fenêtre
+        maxHeight: "100vh", // Importante pour éviter tout débordement
+        overflow: "hidden", // Empêche le défilement global
         backgroundColor: "#f5f5f5",
       }}
     >
@@ -28,6 +30,7 @@ const Layout: React.FC = () => {
         sx={{
           display: "flex",
           flex: 1,
+          overflow: "hidden", // Empêche le débordement
           paddingLeft: "10px",
           paddingRight: "10px",
           position: "relative",
@@ -36,7 +39,7 @@ const Layout: React.FC = () => {
         {/* Sidebar gauche */}
         <Sidebar />
 
-        {/* Zone de contenu dynamique */}
+        {/* Zone de contenu dynamique avec défilement */}
         <Box
           sx={{
             flex: 1,
@@ -44,7 +47,11 @@ const Layout: React.FC = () => {
             margin: "10px",
             borderRadius: "8px",
             boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden", // Contient le défilement
           }}
+          className="content-wrapper"
         >
           <Outlet />
         </Box>
@@ -56,9 +63,10 @@ const Layout: React.FC = () => {
         <Box
           sx={{
             position: "absolute",
-            bottom: "10px",
+            bottom: "20px",
             right: "10px",
             textAlign: "center",
+            zIndex: 10,
           }}
         >
           <Typography variant="body2">Suivez-nous sur :</Typography>

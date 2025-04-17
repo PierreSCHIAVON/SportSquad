@@ -1,6 +1,7 @@
 const userService = require('../services/userService');
 const bcrypt = require('bcrypt');
 const { User } = require('../models'); 
+const axios = require('axios');
 
 // Function to get all users
 async function getAllUsers(req, res) {
@@ -77,10 +78,41 @@ async function postAdditionalInfo(req, res) {
   }
 }
 
+async function getUserPosition(req, res){
+  try {
+      const userId = req.user.id;
+      const userPosition = await userService.getPosition(userId);
+      
+      if (!userPosition) {
+        return res.status(404).json({ message: "Position non trouvée" });
+      }
+
+       const geocodeResponse = await axios.get('https://nominatim.openstreetmap.org/search', {
+          params: {
+              q: userPosition,
+              format: 'json',
+              limit: 1
+          },
+          headers: {
+              'User-Agent': 'SportsSquadApp/1.0'
+          }
+      });
+
+      if (geocodeResponse.data && geocodeResponse.data.length > 0) {
+        const { lat, lon } = geocodeResponse.data[0];
+        return res.status(200).json({ lat: lat, lon: lon, localisation: userPosition });
+      }
+      return res.status(404).json({ message: "Coordonnées non trouvées" });
+  } catch (error) {
+      return res.status(500).json({ message: error.message });
+  }
+}
+
 module.exports = {
     getAllUsers,
     getUserById,
     createUser,
     updateUser,
+    getUserPosition,
     postAdditionalInfo,
 };

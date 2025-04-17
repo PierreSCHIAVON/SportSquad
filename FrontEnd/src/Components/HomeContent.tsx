@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Assurez-vous d'utiliser react-router-dom
 import { getEvents } from '../services/eventsService';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Evenements from './Events';
 
 const getSportIcon = (sport: string): string => {
     switch (sport.toLowerCase()) {
@@ -25,7 +24,6 @@ const getSportIcon = (sport: string): string => {
     }
 };
 
-
 interface Event {
     id_evenement: number;
     id_user: number;
@@ -37,6 +35,7 @@ interface Event {
     date_fin: string;
     description_event: string;
     etat: string;
+    organisateur: string;
 }
 
 const HomeContent: React.FC = () => {
@@ -70,43 +69,49 @@ const HomeContent: React.FC = () => {
         }, [isAuthenticated]);
 
     return (
-        <div className="container mt-5">
+        <div className="">
             <section className="mb-5">
-                <h2 className="text-center mb-4">Événements à venir</h2>
-                <div className="row gy-4">
-                    {events.map((event) => (
-                        <div key={event.id_evenement} className="col-12">
-                            <div
-                                onClick={() => navigate(`/dashboard/event/${event.id_evenement}`)}
-                                className="d-flex justify-content-between align-items-center p-4 rounded"
-                                style={{ backgroundColor: '#d9d9d9', cursor: 'pointer' }}
-                            >
-                                <div className="flex-grow-1">
-                                    <p className="fw-bold text-uppercase mb-1">{event.sport}</p>
-                                    <h3 className="fw-bold text-warning">ÉVÉNEMENT</h3>
-                                    <p className="text-muted text-uppercase small">Organisé par utilisateur #{event.id_user}</p>
-                                    <div className="d-flex flex-wrap mt-3 gap-4">
-                                        <div>
-                                            <p className="text-muted text-uppercase small mb-0">Date</p>
-                                            <p className="fw-bold mb-0">{new Date(event.date_debut).toLocaleDateString()}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-muted text-uppercase small mb-0">Heure</p>
-                                            <p className="fw-bold mb-0">{new Date(event.date_debut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-muted text-uppercase small mb-0">Lieu</p>
-                                            <p className="fw-bold mb-0">{event.localisation}</p>
+                <h2 className="text-center mb-5">Événements à venir</h2>
+                    <div className="row gy-4 pb-5" style={{
+                        maxHeight: 'calc(100vh - 200px)',
+                        overflowY: 'auto',
+                        paddingRight: '10px',
+                    }}>    
+                        {events.map((event) => (
+                            <div key={event.id_evenement} className="col-12">   
+                                <div
+                                    onClick={() => navigate(`/dashboard/event/${event.id_evenement}`)}
+                                    className="d-flex justify-content-between align-items-center p-4 border-0 rounded-4"
+                                    style={{ backgroundColor: '#d9d9d9', cursor: 'pointer' }}
+                                >
+                                    <div className="flex-grow-1">
+                                        <p className="fw-bold text-uppercase mb-1">{event.sport}</p>
+                                        <h3 className="fw-bold text-warning">ÉVÉNEMENT</h3>
+                                        {event.organisateur !== "null null" && (
+                                            <p className="text-muted text-uppercase small">Organisé par {event.organisateur}</p>
+                                        )}
+                                        <div className="d-flex flex-wrap mt-3 gap-4">
+                                            <div>
+                                                <p className="text-muted text-uppercase small mb-0">Date</p>
+                                                <p className="fw-bold mb-0">{new Date(event.date_debut).toLocaleDateString()}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-muted text-uppercase small mb-0">Heure</p>
+                                                <p className="fw-bold mb-0">{new Date(event.date_debut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-muted text-uppercase small mb-0">Lieu</p>
+                                                <p className="fw-bold mb-0">{event.localisation}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <img src={getSportIcon(event.sport)} alt={event.sport} style={{ width: '100px', height: 'auto' }} />
+                                    <div>
+                                        <img src={getSportIcon(event.sport)} alt={event.sport} style={{ width: '100px', height: 'auto' }} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
             </section>
         </div>
     );

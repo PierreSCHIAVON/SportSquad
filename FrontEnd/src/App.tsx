@@ -13,6 +13,7 @@ import EventPage from "./Components/EventPage.tsx";
 import CreateEvent from "./Components/CreateEvent.tsx";
 import MyParticipationsPage from "./Components/MyParticipationsPage.tsx"; 
 import LandingPage from "./Components/LandingPage.tsx";
+import Maps from "./Components/Maps.tsx";
 
 const App: React.FC = () => {
   const isAuthenticated = !!localStorage.getItem("token");
@@ -36,7 +37,7 @@ const App: React.FC = () => {
           }
         />
         <Route path="/login/additional-info" element={<AdditionalInfo />} />
-
+          
         {/* Routes protégées */}
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<Layout />}>
@@ -51,6 +52,7 @@ const App: React.FC = () => {
               path="conditions-utilisation"
               element={<ConditionsUtilisation />}
             />
+            <Route path="maps" element={<Maps />} />
           </Route>
         </Route>
 
