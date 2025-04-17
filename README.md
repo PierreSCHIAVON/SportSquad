@@ -49,18 +49,18 @@
 
 ##  Installation du projet
 
-### 1. Cloner le repo
+### Cloner le repo
 
 git clone https://github.com/PierreSCHIAVON/SportSquad.git
 cd SportSquad
 
-### 2. Installer le front
+### Installer le front
 
 cd Frontend
 npm install
 npm run dev
 
-### 3. Installer le Back
+### Installer le Back
 
 cd Backend
 npm install
