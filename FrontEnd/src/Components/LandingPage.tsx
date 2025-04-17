@@ -1,9 +1,12 @@
 import "../styles/LandingPage.css";
+import { useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ExpandMoreOutlined } from "@mui/icons-material";
+import { ExpandMoreOutlined, Facebook, FacebookOutlined, Twitter, X } from "@mui/icons-material";
 import { Add, SportsHandball, PeopleOutline } from "@mui/icons-material";
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 const LandingPage = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll(); // Obtenir la progression du scroll
   const widthImg1 = useTransform(scrollYProgress, [0, 1], ["470px", "480px"]);
   const widthImg2 = useTransform(scrollYProgress, [0, 1], ["350px", "400px"]);
@@ -13,35 +16,38 @@ const LandingPage = () => {
   return (
     <div className="page">
       <div className="header">
-        <div>
-          <img
-            src="./images/logo-partiel.png"
-            height={"45px"}
-            width={"45px"}
-            alt=""
-          />
-        </div>
-        <div className="menu">
-          <nav>
-            <ul>
-              <li>Accueil</li>
-              <li>Le Concept</li>
-              <li>La Team</li>
-              <li>Contact</li>
-            </ul>
-          </nav>
-        </div>
-        <div>
-          <button
-            className="logButton"
-            onClick={() => (window.location.href = "/login")}
-          >
-            Se connecter / S'inscrire
-          </button>
-        </div>
+      <div>
+        <img
+          src="./images/logo-partiel.png"
+          height={"45px"}
+          width={"45px"}
+          alt="Logo"
+        />
       </div>
+      <div className={`menu ${menuOpen ? "open" : ""}`}>
+        <nav>
+          <ul>
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#concept">Le Concept</a></li>
+            <li><a href="#team">La Team</a></li>
+            <li><a href="#footer">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div className="actions">
+        <button
+          className="logButton"
+          onClick={() => (window.location.href = "/login")}
+        >
+          Se connecter / S'inscrire
+        </button>
+        <button className="burger" onClick={() => setMenuOpen(!menuOpen)}>
+          ☰
+        </button>
+      </div>
+    </div>
       <div className="thebody">
-        <div className="hero">
+        <div className="hero" id="accueil">
           <div className="images">
             <motion.img
               className="img1"
@@ -108,7 +114,7 @@ const LandingPage = () => {
           </motion.div>
         </div>
 
-        <div className="concept">
+        <div className="concept" id="concept">
           <div className="up">
             <div className="text">
               <p>
@@ -121,8 +127,8 @@ const LandingPage = () => {
             </div>
 
             <div className="button">
-              <button className="logButton mr-2">Créer mon match</button>
-              <button className="logButton">Rejoindre un match</button>
+              <button className="logButton mr-2"  onClick={() => (window.location.href = "/login")}>Créer mon match</button>
+              <button className="logButton"  onClick={() => (window.location.href = "/login")}>Rejoindre un match</button>
             </div>
           </div>
           <div className="down">
@@ -177,14 +183,14 @@ const LandingPage = () => {
             loop
             muted
             playsInline
-            className="absolute top-0 left-0 w-full h-full object-cover"
+            className="videosection"
           >
             <source src="/video/basket.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
 
-        <div className="team">
+        <div className="team"  id="team">
           <p className="p2">
             {" "}
             Notre <span>équipe</span>
@@ -199,40 +205,82 @@ const LandingPage = () => {
 
           <div className="teamMembers">
             <div className="member">
-              <img src="/images/team1.png" height={"400px"} alt="" />
-              <p>John Doe</p>
-              <p>CEO</p>
-              <p>CEO</p>
+              <img src="/images/gaia.png" height={"400px"} alt="" />
+              <p>Gaia DUCOURNAU</p>
+              <p>Développeur Web</p>
+  
             </div>
             <div className="member">
-              <img src="/images/team2.png" height={"400px"} alt="" />
-              <p>Jane Doe</p>
-              <p>CTO</p>
-              <p>CTO</p>
+              <img src="/images/jonathan.png" height={"400px"} alt="" />
+              <p>Jonathan DAH</p>
+              <p>Développeur Web</p>
+
             </div>
             <div className="member">
-              <img src="/images/team3.png" height={"400px"} alt="" />
-              <p>Jack Doe</p>
-              <p>CMO</p>
-              <p>CMO</p>
+              <img src="/images/diego.png" height={"400px"} alt="" />
+              <p>Diego MAS-BOUVRY</p>
+              <p>Développeur Web</p>
+
             </div>
             <div className="member">
-              <img src="/images/team2.png" height={"400px"} alt="" />
-              <p>Jane Doe</p>
-              <p>CTO</p>
-              <p>CTO</p>
+              <img src="/images/pierre.png" height={"400px"} alt="" />
+              <p>Pierre SCHIAVON</p>
+              <p>Développeur Web</p>
+
             </div>
             <div className="member">
-              <img src="/images/team3.png" height={"400px"} alt="" />
-              <p>Jack Doe</p>
-              <p>CMO</p>
-              <p>CMO</p>
+              <img src="/images/doug.png" height={"400px"} alt="" />
+              <p>Douglas QUASHIE</p>
+              <p>Développeur Web</p>
+
             </div>
           </div>
         </div>
-        <div>CONTACT</div>
       </div>
-      <div className="footer">FOOTER</div>
+      <div className="footer" id='footer'>
+  <div className="footer-content">
+
+    <div className="footer-section about">
+      <h3>SPORTSQUAD</h3>
+      <p>Trouvez des joueurs près de vous et rejoignez les matchs !</p>
+    </div>
+    
+
+    <div className="footer-section links">
+      <h3>Liens Rapides</h3>
+      <ul>
+        <li><a href="#">Accueil</a></li>
+        <li><a href="#">À propos</a></li>
+        <li><a href="/login">S'inscrire</a></li>
+      </ul>
+    </div>
+    
+  
+    <div className="footer-section contact">
+      <h3>Contact</h3>
+      <p>2 Place de l'Europe</p>
+      <p>31200 Toulouse, France</p>
+      <p>contact@ynov.com</p>
+      <p>+33 1 23 45 67 89</p>
+    </div>
+    
+
+    <div className="footer-section social">
+      <h3>Suivez-nous</h3>
+      <div className="social-icons">
+        
+        <a href="#"><X/></a>
+        <a href="#"><FacebookOutlined/></a>
+        <a href="#"><InstagramIcon/></a>
+      </div>
+    </div>
+  </div>
+  
+ 
+  <div className="footer-bottom">
+    <p>&copy; <script>document.write(new Date().getFullYear())</script> SPORTSQUAD. Tous droits réservés.</p>
+  </div>
+</div>
     </div>
   );
 };
