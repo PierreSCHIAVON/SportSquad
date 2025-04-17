@@ -102,6 +102,15 @@ export const deleteEvent = async (id: string) => {
     }
 };
 
+export const updateUserPass = async (id: string, passwordData: any) => {
+    try {
+        const response = await axios.put(`${API_URL}/updateUserPass/${id}`, passwordData);
+        return response.data;
+    } catch (error) {
+        console.error(`Erreur lors de la mise à jour du mot de passe pour l'utilisateur avec l'ID ${id} :`, error);
+        throw error;
+    }
+};
 export const getParticipations = async (timeParam: string) => {
     try {
         const token = localStorage.getItem('token');

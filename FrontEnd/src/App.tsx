@@ -9,12 +9,10 @@ import ProfilUser from "./Components/ProfilUser.tsx";
 import LoginPage from "./Components/Login";
 import AdditionalInfo from "./Components/Additional-info";
 import PrivateRoute from "./Components/PrivateRoutes";
-import EventPage from "./Components/EventPage.tsx"; 
+import EventPage from "./Components/EventPage.tsx";
 import CreateEvent from "./Components/CreateEvent.tsx";
-import MyParticipationsPage from "./Components/MyParticipationsPage.tsx"; 
+import MyParticipationsPage from "./Components/MyParticipationsPage.tsx";
 import LandingPage from "./Components/LandingPage.tsx";
-
-
 
 const App: React.FC = () => {
   const isAuthenticated = !!localStorage.getItem("token");

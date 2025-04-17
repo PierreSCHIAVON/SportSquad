@@ -64,6 +64,24 @@ async function updateUser(req, res) {
   }
 }
 
+async function updateUserPass(req, res) {
+  try {
+    const { id } = req.params;
+    const { actualpassword, newpassword } = req.body;
+
+    if (!actualpassword || !newpassword) {
+      return res.status(400).json({ error: "Les mots de passe sont requis." });
+    }
+
+    const response = await userService.updateUserPass(id, actualpassword, newpassword);
+
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
+
 async function postAdditionalInfo(req, res) {
   try { 
       const userId = req.user.id;
@@ -82,5 +100,6 @@ module.exports = {
     getUserById,
     createUser,
     updateUser,
+    updateUserPass,
     postAdditionalInfo,
 };

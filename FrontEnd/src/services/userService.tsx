@@ -19,3 +19,13 @@ export const updateUser = async (id: string | number, user: unknown) => {
         throw new Error(`Impossible de mettre a jour l'utilisateur avec l'ID ${id}.`);
     }
 };
+
+export const updateUserPass = async (id: string | number, passwordData: { actualpassword: string, newpassword: string }) => {
+    try {
+        const response = await api.put(`/updateUserPass/${id}`, passwordData);
+        return response.data;
+    } catch (error) {
+        console.error(`Erreur lors de la mise à jour du mot de passe de l'utilisateur avec l'ID ${id} :`, error);
+        throw new Error(`Impossible de mettre à jour le mot de passe de l'utilisateur avec l'ID ${id}.`);
+    }
+};

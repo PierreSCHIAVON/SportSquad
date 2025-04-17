@@ -1,5 +1,22 @@
 import React, { useState } from 'react';
-import { updateUser } from '../../services/userService';
+import { updateUser,updateUserPass } from '../../services/userService';
+import {
+  Autocomplete,
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { orange } from "@mui/material/colors";
+import { Person as PersonIcon } from "@mui/icons-material";
 
 interface User {
   id_user: number;
@@ -21,17 +38,53 @@ interface ProfilUserProps {
 }
 
 const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
-  // État local pour gérer les valeurs modifiées
   const [editing, setEditing] = useState(false);
   const [updatedUser, setUpdatedUser] = useState<User>(user);
   const [updatingPass, updatePassword] = useState(false);
+  const [passwords, setPasswords] = useState({
+    actualpassword: "",
+    newpassword: "",
+    newpasswordverif: "",
+  });
+
+  // Convertir la chaîne de sports favoris en tableau pour l'autocomplétion
+  const [selectedSports, setSelectedSports] = useState<string[]>(
+    user.sports_fav
+      ? user.sports_fav.split(";").map((sport) => sport.trim())
+      : []
+  );
 
   // Fonction pour gérer les changements des champs du formulaire user
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChangeUser = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setUpdatedUser((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+
+  };
+
+  const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setPasswords((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  
+
+  // Fonction pour gérer les changements des sports favoris
+  const handleSportsChange = (
+    _event: React.SyntheticEvent,
+    newValue: string[]
+  ) => {
+    setSelectedSports(newValue);
+    // Mettre à jour l'utilisateur avec les sports sélectionnés joints par des points-virgules
+    setUpdatedUser((prevState) => ({
+      ...prevState,
+      sports_fav: newValue.join(";"),
     }));
   };
 
@@ -44,11 +97,13 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
 
     try {
       await updateUser(user.id_user, updatedUser);
-      console.log('Utilisateur mis à jour avec succès', updatedUser);
+      console.log("Utilisateur mis à jour avec succès", updatedUser);
       setEditing(false);
       window.location.reload();
     } catch (err) {
-      setError("Une erreur est survenue lors de la mise à jour. Veuillez réessayer.");
+      setError(
+        "Une erreur est survenue lors de la mise à jour. Veuillez réessayer."
+      );
     }
   };
 
@@ -57,163 +112,285 @@ const ProfilUser: React.FC<ProfilUserProps> = ({ user, isOwnProfile }) => {
     e.preventDefault();
     setError(null); // Réinitialiser l'erreur avant la requête
 
+    const { actualpassword, newpassword, newpasswordverif } = passwords;
+
+    // Vérifier que l'ancien mot de passe est rempli
+    if (!actualpassword) {
+        setError("Veuillez entrer votre mot de passe actuel.");
+        return;
+    }
+
+    // Vérifier que le nouveau mot de passe et la confirmation sont identiques
+    if (newpassword !== newpasswordverif) {
+        setError("Les nouveaux mots de passe ne correspondent pas.");
+        return;
+    }
+
+    // Vérifier la complexité du mot de passe (au moins 8 caractères, une majuscule, une minuscule, un chiffre)
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(newpassword)) {
+        setError("Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.");
+        return;
+    }
+
+    const passwordData = {
+      actualpassword,
+      newpassword
+    };
+
     try {
-      //await UpdatePass(user.id_user, updatedPassword);
-      //console.log('Mot de passe mis à jour avec succès');
-      setError("La mise a jour n'est pas implémenté"); //a supprimer quand fonction implémenté
-      //updatePassword(false);
-      //window.location.reload();
+        await updateUserPass(user.id_user, passwordData);
+        console.log('Mot de passe mis à jour avec succès');
+        //setError("La mise à jour n'est pas implémentée"); // À supprimer quand la fonction sera prête
+        updatePassword(false);
+        window.location.reload();
     } catch (err) {
-      setError("Une erreur est survenue lors de la mise à jour. Veuillez réessayer.");
+      setError(
+        "Une erreur est survenue lors de la mise à jour. Veuillez réessayer."
+      );
       //message d'erreur sur le mot de passe ??
     }
   };
 
+  const sportsOptions = [
+    "Football",
+    "BasketBall",
+    "Tennis",
+    "Petanque",
+    "Musculation",
+    "Handball",
+  ];
+
   return (
-    <div className="profil-user-container">
-      <div className="profil-titre">
-        <img src={user.photo} alt={`${user.prenom} ${user.nom}`} className="profil-photo" />
-        <h1>{user.prenom} {user.nom}</h1>
-        <p>@{user.pseudo}</p>
-      </div>
-      
-      {!editing && !updatingPass && (
-      <div className="profil-info">
-        <h3>Informations personnelles</h3>
-        <ul>
-          {isOwnProfile && (
-            <li><strong>Email:</strong> {user.email}</li>
+    <Container maxWidth="sm" sx={{ py: 4 }}>
+      <Paper elevation={3} sx={{ p: 4, bgcolor: "#fff", borderRadius: 4 }}>
+        <Box textAlign="center">
+          {user.photo ? (
+            <Avatar
+              alt={`${user.prenom} ${user.nom}`}
+              src={user.photo}
+              sx={{ width: 100, height: 100, mx: "auto", mb: 2 }}
+            />
+          ) : (
+            <Avatar
+              sx={{
+                width: 100,
+                height: 100,
+                mx: "auto",
+                mb: 2,
+                bgcolor: orange[500],
+              }}
+            >
+              <PersonIcon sx={{ fontSize: 40 }} />
+            </Avatar>
           )}
-          <li><strong>Niveau:</strong> {user.niveau}</li>
-          <li><strong>Sports favoris:</strong> {user.sports_fav}</li>
-          <li><strong>Localisation:</strong> {user.localisation}</li>
-          <li><strong>Date d'inscription:</strong> {new Date(user.date_inscription).toLocaleDateString()}</li>
-        </ul>
-      </div>
-      )}
-      
-      {isOwnProfile && !editing && !updatingPass ? (
-        <div className="profil-buttons">
-          <h3>Modifier votre profil</h3>
-          <button className="edit-button" onClick={() => setEditing(true)}>Modifier les informations</button>
-          <button className="edit-button" onClick={() => updatePassword(true)}>Changer le mot de passe</button>
-        </div>
-      ) : null}
+          <Typography variant="h5" fontWeight="bold">
+            {user.prenom} {user.nom}
+          </Typography>
+          <Typography color="text.secondary">@{user.pseudo}</Typography>
+        </Box>
 
-      {/* Formulaire de modification */}
-      {editing && (
-        <form onSubmit={handleSubmitUser} className="edit-form">
-          <ul>
-          <li className="form-group">
-            {error && (
-              <div className="alert alert-danger mt-4 text-center" role="alert">
-                {error}
-              </div>
-            )}
-            <label htmlFor="prenom">Prénom</label>
-            <input
-              type="text"
-              id="prenom"
-              name="prenom"
-              value={updatedUser.prenom}
-              onChange={handleChange}
-            />
-          </li>
-          <li className="form-group">
-            <label htmlFor="nom">Nom</label>
-            <input
-              type="text"
-              id="nom"
-              name="nom"
-              value={updatedUser.nom}
-              onChange={handleChange}
-            />
-          </li>
-          <li className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={updatedUser.email}
-              onChange={handleChange}
-            />
-          </li>
-          <li className="form-group">
-            <label htmlFor="niveau">Niveau</label>
-            <input
-              type="text"
-              id="niveau"
-              name="niveau"
-              value={updatedUser.niveau}
-              onChange={handleChange}
-            />
-          </li>
-          <li className="form-group">
-            <label htmlFor="sports_fav">Sports favoris</label>
-            <input
-              type="text"
-              id="sports_fav"
-              name="sports_fav"
-              value={updatedUser.sports_fav}
-              onChange={handleChange}
-            />
-          </li>
-          <li className="form-group">
-            <label htmlFor="localisation">Localisation</label>
-            <input
-              type="text"
-              id="localisation"
-              name="localisation"
-              value={updatedUser.localisation}
-              onChange={handleChange}
-            />
-          </li>
-          </ul>
-          <button type="submit" className="save-button">Enregistrer les modifications</button>
-          <button type="button" className="cancel-button" onClick={() => setEditing(false)}>Annuler</button>
-        </form>
-      )}
+        {!editing && !updatingPass && (
+          <Box mt={4}>
+            <Typography variant="h6" gutterBottom>
+              Informations personnelles
+            </Typography>
+            <List disablePadding>
+              {isOwnProfile && (
+                <ListItem disableGutters>
+                  <ListItemText primary="Email" secondary={user.email} />
+                </ListItem>
+              )}
+              <ListItem disableGutters>
+                <ListItemText primary="Niveau" secondary={user.niveau} />
+              </ListItem>
+              <ListItem disableGutters>
+                <ListItemText
+                  primary="Sports favoris"
+                  secondary={
+                    user.sports_fav ? user.sports_fav.split(";").join(", ") : ""
+                  }
+                />
+              </ListItem>
+              <ListItem disableGutters>
+                <ListItemText
+                  primary="Localisation"
+                  secondary={user.localisation}
+                />
+              </ListItem>
+              <ListItem disableGutters>
+                <ListItemText
+                  primary="Date d'inscription"
+                  secondary={new Date(
+                    user.date_inscription
+                  ).toLocaleDateString()}
+                />
+              </ListItem>
+            </List>
+          </Box>
+        )}
 
-      {/* Formulaire d'update password */}
-      {updatingPass && (
-        <form onSubmit={handleSubmitPass} className="update-form">
-          <ul>
-          <li className="form-group">
+        {isOwnProfile && !editing && !updatingPass && (
+          <Box mt={4}>
+            <Divider />
+            <Typography variant="h6" mt={2}>
+              Modifier votre profil
+            </Typography>
+            <Grid container spacing={2} mt={1}>
+              <Grid item xs={6}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  sx={{ bgcolor: orange[500], color: "white" }}
+                  onClick={() => setEditing(true)}
+                >
+                  Modifier
+                </Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  sx={{ borderColor: orange[500], color: orange[500] }}
+                  onClick={() => updatePassword(true)}
+                >
+                  Changer mot de passe
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        )}
+
+        {editing && (
+          <Box component="form" mt={4} onSubmit={handleSubmitUser}>
+            <Typography variant="h6" gutterBottom>
+              Modifier les informations
+            </Typography>
             {error && (
-              <div className="alert alert-danger mt-4 text-center" role="alert">
+              <Typography color="error" textAlign="center">
                 {error}
-              </div>
+              </Typography>
             )}
-            <label htmlFor="actualpassword">Mot de passe actuelle</label>
-            <input
-              type="password"
-              id="actualpassword"
-              name="actualpassword"
-            />
-          </li>
-          <li className="form-group">
-            <label htmlFor="newpassword">Nouveau mot de passe</label>
-            <input
-              type="password"
-              id="newpassword"
-              name="newpassword"
-            />
-          </li>
-          <li className="form-group">
-            <label htmlFor="newpasswordverif">Verification du mot de passe</label>
-            <input
-              type="password"
-              id="newpasswordverif"
-              name="newpasswordverif"
-            />
-          </li>
-          </ul>
-          <button type="submit" className="save-button">Enregistrer</button>
-          <button type="button" className="cancel-button" onClick={() => updatePassword(false)}>Annuler</button>
-        </form>
-      )}
-    </div>
+            <Grid container spacing={2}>
+              {[
+                { label: "Prénom", name: "prenom" },
+                { label: "Nom", name: "nom" },
+                { label: "Email", name: "email", type: "email" },
+                { label: "Niveau", name: "niveau" },
+                { label: "Localisation", name: "localisation" },
+              ].map((field) => (
+                <Grid item xs={12} key={field.name}>
+                  <TextField
+                    fullWidth
+                    label={field.label}
+                    name={field.name}
+                    type={field.type || "text"}
+                    value={updatedUser[field.name as keyof User]}
+                    onChange={handleChangeUser}
+                  />
+                </Grid>
+              ))}
+              <Grid item xs={12}>
+                <Autocomplete
+                  multiple
+                  id="sports-favoris"
+                  options={sportsOptions}
+                  value={selectedSports}
+                  onChange={handleSportsChange}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Sports Favoris" />
+                  )}
+                  ChipProps={{
+                    sx: { bgcolor: orange[100], borderColor: orange[300] },
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ bgcolor: orange[500], color: "white" }}
+                >
+                  Enregistrer
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  fullWidth
+                  variant="text"
+                  onClick={() => setEditing(false)}
+                >
+                  Annuler
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        )}
+
+        {updatingPass && (
+          <Box component="form" mt={4} onSubmit={handleSubmitPass}>
+            <Typography variant="h6" gutterBottom>
+              Changer le mot de passe
+            </Typography>
+            {error && (
+              <Typography color="error" textAlign="center">
+                {error}
+              </Typography>
+            )}
+            <Grid container spacing={2}>
+              {[
+                {
+                  label: "Mot de passe actuel",
+                  name: "actualpassword",
+                  type: "password",
+                },
+                {
+                  label: "Nouveau mot de passe",
+                  name: "newpassword",
+                  type: "password",
+                },
+                {
+                  label: "Vérification du mot de passe",
+                  name: "newpasswordverif",
+                  type: "password",
+                },
+              ].map((field) => (
+                <Grid item xs={12} key={field.name}>
+                  <TextField
+                    fullWidth
+                    label={field.label}
+                    name={field.name}
+                    type={field.type}
+                    onChange={handleChangePassword}
+                    value={passwords[field.name as keyof typeof passwords]}
+                  />
+                </Grid>
+              ))}
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ bgcolor: orange[500], color: "white" }}
+                >
+                  Enregistrer
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  fullWidth
+                  variant="text"
+                  onClick={() => updatePassword(false)}
+                >
+                  Annuler
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        )}
+      </Paper>
+    </Container>
   );
 };
 
