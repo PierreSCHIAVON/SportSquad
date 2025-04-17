@@ -100,6 +100,6 @@ module.exports = {
     getUserById,
     createUser,
     updateUser,
-    updateUserPass
+    updateUserPass,
     postAdditionalInfo,
 };
