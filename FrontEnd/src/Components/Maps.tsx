@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Circle, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import api from '../api/Api';
+import { useNavigate } from 'react-router-dom';
 
 // Fix for default icon issue in leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -33,6 +34,7 @@ const Maps = () => {
     const [userPosition, setUserPosition] = useState<{ lat: string; lon: string; localisation: string } | null>(null);
     const [events, setEvents] = useState<Event[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserPosition = async () => {
@@ -49,7 +51,6 @@ const Maps = () => {
                         localisation: response.data.localisation || 'Position actuelle',
                     });
                 } else {
-                    // Fallback si les données API sont incomplètes
                     setUserPosition({
                         lat: "48.8566",
                         lon: "2.3522",
@@ -58,7 +59,6 @@ const Maps = () => {
                 }
             } catch (error) {
                 console.error('Error fetching user position:', error);
-                // Fallback en cas d'erreur
                 setUserPosition({
                     lat: "48.8566",
                     lon: "2.3522",
@@ -90,12 +90,16 @@ const Maps = () => {
         fetchEvents();
     }, [userPosition]);
 
+    const goToEventDetails = (eventId: number) => {
+        navigate(`/dashboard/event/${eventId}`);
+    };
+
     const defaultPosition: [number, number] = [48.8566, 2.3522]; // Paris
 
     const mapCenter: [number, number] = userPosition && userPosition.lat && userPosition.lon
         ? [parseFloat(userPosition.lat), parseFloat(userPosition.lon)]
         : defaultPosition;
-
+    
     return (
         <div className="maps-container p-4">
             <h2 className="mb-4 mt-4">Retrouver des événements autour de chez vous</h2>
@@ -140,7 +144,6 @@ const Maps = () => {
                                         parseFloat(userPosition.lat),
                                         parseFloat(userPosition.lon),
                                     ]}
-                                    radius={5000} // 5km radius
                                     pathOptions={{ color: 'blue', fillColor: 'blue', fillOpacity: 0.1 }}
                                 />
                             </>
@@ -163,6 +166,12 @@ const Maps = () => {
                                             <p><strong>Date:</strong> {new Date(event.date_debut).toLocaleDateString()}</p>
                                             <p><strong>Lieu:</strong> {event.localisation}</p>
                                             <p>{event.description_event}</p>
+                                            <button 
+                                                className="btn btn-primary mt-2"
+                                                onClick={() => goToEventDetails(event.id_evenement)}
+                                            >
+                                                Voir les détails
+                                            </button>
                                         </div>
                                     </Popup>
                                 </Marker>
