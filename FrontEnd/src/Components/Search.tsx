@@ -22,22 +22,18 @@ const getSportIcon = (sport: string): string => {
         case 'tennis':
             return 'https://cdn-icons-png.flaticon.com/512/6057/6057897.png';
         case 'basketball':
-            return 'https://cdn-icons-png.flaticon.com/512/861/861499.png';
-        case 'handball':
-            return 'https://cdn-icons-png.flaticon.com/512/3534/3534026.png';
-        case 'musculation':
-        case 'fitness':
-        case 'gym':
-            return 'https://cdn-icons-png.flaticon.com/512/2331/2331970.png';
-        case 'pétanque':
-            return 'https://cdn-icons-png.flaticon.com/512/8096/8096676.png';
+            return '/images/basketball.svg';
+        case 'course à pied':
+            return '/images/running.png';
+        case 'natation':
+            return '/images/la-natation.png';
         default:
             return 'https://cdn-icons-png.flaticon.com/512/727/727399.png'; // une icône générique
     }
 };
 
 
-const sportOptions = ['Football', 'Tennis', 'Basketball', 'Handball', 'Musculation', 'Pétanque'];
+const sportOptions = ['Football', 'Tennis', 'Basketball', 'Course à pied', 'Natation'];
 const niveauOptions = ['Débutant', 'Intermédiaire', 'Avancé'];
 
 const SearchPage: React.FC = () => {
