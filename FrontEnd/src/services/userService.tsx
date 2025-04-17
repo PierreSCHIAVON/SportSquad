@@ -20,7 +20,7 @@ export const updateUser = async (id: string | number, user: unknown) => {
     }
 };
 
-export const updateUserPass = async (id: string | number, passwordData: { actualPassword: string, newPassword: string }) => {
+export const updateUserPass = async (id: string | number, passwordData: { actualpassword: string, newpassword: string }) => {
     try {
         const response = await api.put(`/updateUserPass/${id}`, passwordData);
         return response.data;
