@@ -44,7 +44,7 @@ const RightSidebar: React.FC = () => {
     >
       {/* Titre fixe en haut */}
       <div className="w-100 p-4 border-bottom">
-        <span className="fs-4 d-block text-start fw-bold">Événements à venir</span>
+        <span className="fs-4 d-block text-start fw-bold">Mes événements à venir</span>
       </div>
 
       {/* Conteneur avec défilement */}

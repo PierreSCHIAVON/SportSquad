@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from "../api/Api";
+import { useNavigate } from 'react-router-dom';
 
 const CreateEvent = () => {
     const [formData, setFormData] = useState({
@@ -11,6 +12,8 @@ const CreateEvent = () => {
         description_event: '',
         nb_max_participants: '',
     });
+
+    const navigate = useNavigate();
 
     const [searchQuery, setSearchQuery] = useState('');
     const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -69,6 +72,7 @@ const CreateEvent = () => {
             });
 
             alert("Événement créé !");
+            navigate('/dashboard');
         } catch (error: any) {
             console.error("Erreur :", error.response?.data || error.message);
         }

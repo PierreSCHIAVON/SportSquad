@@ -56,6 +56,9 @@ const EventPage: React.FC = () => {
 
             await createParticipation(token, participationData);
             setSuccessMessage("Vous êtes inscrit à l'événement !");
+            setTimeout(() => {
+                navigate("/dashboard/myparticipations");
+            }, 2000);
         } catch (err: any) {
             console.error("❌ Erreur lors de la participation :", err);
             alert("Erreur : " + (err.response?.data?.error || err.message));

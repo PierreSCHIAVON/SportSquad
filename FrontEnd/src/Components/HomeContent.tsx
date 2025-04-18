@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Assurez-vous d'utiliser react-router-dom
+import { useNavigate } from 'react-router-dom';
 import { getEvents } from '../services/eventsService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -73,42 +73,49 @@ const HomeContent: React.FC = () => {
                         overflowY: 'auto',
                         paddingRight: '10px',
                     }}>    
-                        {events.map((event) => (
-                            <div key={event.id_evenement} className="col-12">   
-                                <div
-                                    onClick={() => navigate(`/dashboard/event/${event.id_evenement}`)}
-                                    className="d-flex justify-content-between align-items-center p-4 border-0 rounded-4"
-                                    style={{ backgroundColor: '#d9d9d9', cursor: 'pointer',  transition: "transform 0.2s ease" }}
-                                    onMouseOver={(e) => e.currentTarget.style.transform = "translateY(-3px)"}
-                                    onMouseOut={(e) => e.currentTarget.style.transform = "translateY(0)"}
-                                >
-                                    <div className="flex-grow-1">
-                                        <p className="fw-bold text-uppercase mb-1">{event.sport}</p>
-                                        <h3 className="fw-bold text-warning">ÉVÉNEMENT</h3>
-                                        {event.organisateur !== "null null" && (
-                                            <p className="text-muted text-uppercase small">Organisé par {event.organisateur}</p>
-                                        )}
-                                        <div className="d-flex flex-wrap mt-3 gap-4">
-                                            <div>
-                                                <p className="text-muted text-uppercase small mb-0">Date</p>
-                                                <p className="fw-bold mb-0">{new Date(event.date_debut).toLocaleDateString()}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-muted text-uppercase small mb-0">Heure</p>
-                                                <p className="fw-bold mb-0">{new Date(event.date_debut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-muted text-uppercase small mb-0">Lieu</p>
-                                                <p className="fw-bold mb-0">{event.localisation}</p>
+                        {events.length === 0 ? (
+                            <div className="col-12 text-center py-5">
+                                <h3 className="text-muted">Aucun événement à afficher pour le moment</h3>
+                                <p>Revenez plus tard ou créez votre propre événement</p>
+                            </div>
+                        ) : (
+                            events.map((event) => (
+                                <div key={event.id_evenement} className="col-12">   
+                                    <div
+                                        onClick={() => navigate(`/dashboard/event/${event.id_evenement}`)}
+                                        className="d-flex justify-content-between align-items-center p-4 border-0 rounded-4"
+                                        style={{ backgroundColor: '#d9d9d9', cursor: 'pointer',  transition: "transform 0.2s ease" }}
+                                        onMouseOver={(e) => e.currentTarget.style.transform = "translateY(-3px)"}
+                                        onMouseOut={(e) => e.currentTarget.style.transform = "translateY(0)"}
+                                    >
+                                        <div className="flex-grow-1">
+                                            <p className="fw-bold text-uppercase mb-1">{event.sport}</p>
+                                            <h3 className="fw-bold text-warning">ÉVÉNEMENT</h3>
+                                            {event.organisateur !== "null null" && (
+                                                <p className="text-muted text-uppercase small">Organisé par {event.organisateur}</p>
+                                            )}
+                                            <div className="d-flex flex-wrap mt-3 gap-4">
+                                                <div>
+                                                    <p className="text-muted text-uppercase small mb-0">Date</p>
+                                                    <p className="fw-bold mb-0">{new Date(event.date_debut).toLocaleDateString()}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-muted text-uppercase small mb-0">Heure</p>
+                                                    <p className="fw-bold mb-0">{new Date(event.date_debut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-muted text-uppercase small mb-0">Lieu</p>
+                                                    <p className="fw-bold mb-0">{event.localisation}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <img src={getSportIcon(event.sport)} alt={event.sport} style={{ width: '100px', height: 'auto' }} />
+                                        <div>
+                                            <img src={getSportIcon(event.sport)} alt={event.sport} style={{ width: '100px', height: 'auto' }} />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        )}
                     </div>
             </section>
         </div>
