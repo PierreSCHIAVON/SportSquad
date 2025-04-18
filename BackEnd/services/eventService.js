@@ -36,6 +36,9 @@ const eventService = {
     
             const eventIdsUserParticipates = participations.map(p => p.id_evenement);
     
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
             const events = await Evenement.findAll({
                 where: {
                     [Op.and]: [
@@ -47,6 +50,11 @@ const eventService = {
                         {
                             id_user: {
                                 [Op.ne]: userId
+                            }
+                        },
+                        {
+                            date_debut: {
+                                [Op.gte]: today
                             }
                         }
                     ]
