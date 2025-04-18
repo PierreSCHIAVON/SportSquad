@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from "../api/Api";
 import { useNavigate } from 'react-router-dom';
+import Snackbar from '@mui/material/Snackbar';
 
 const CreateEvent = () => {
     const [formData, setFormData] = useState({
@@ -12,6 +13,9 @@ const CreateEvent = () => {
         description_event: '',
         nb_max_participants: '',
     });
+
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
 
     const navigate = useNavigate();
 
@@ -71,8 +75,13 @@ const CreateEvent = () => {
                 },
             });
 
-            alert("Événement créé !");
-            navigate('/dashboard');
+            setSnackbarMessage("Événement créé !");
+            setSnackbarOpen(true);
+
+            setTimeout(() => {
+                navigate('/dashboard');
+            }, 1500);
+
         } catch (error: any) {
             console.error("Erreur :", error.response?.data || error.message);
         }
@@ -201,6 +210,13 @@ const CreateEvent = () => {
                         </form>
                     </div>
                 </div>
+                <Snackbar
+                    open={snackbarOpen}
+                    autoHideDuration={3000}
+                    onClose={() => setSnackbarOpen(false)}
+                    message={snackbarMessage}
+                />
+
             </div>
         </div>
     );
