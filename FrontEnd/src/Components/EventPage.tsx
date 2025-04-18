@@ -98,7 +98,7 @@ const EventPage: React.FC = () => {
                 </div>
                 <div className="card-footer bg-light d-flex justify-content-between py-3 border-0 rounded-4">
                     <button className="btn btn-secondary" onClick={() => navigate(-1)}>Retour</button>
-                    <button className="btn btn-success px-4" onClick={handleParticipation}>Participer</button>
+                    <button className="btn btn-primary px-4" onClick={handleParticipation}>Participer</button>
                 </div>
             </div>
         </div>  
