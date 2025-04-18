@@ -65,7 +65,7 @@ const HomeContent: React.FC = () => {
         }, [isAuthenticated]);
 
     return (
-        <div className="">
+        <div style={{ fontFamily: 'League Spartan, sans-serif' }}>
             <section className="mb-5">
                 <h2 className="text-center mb-5">Événements à venir</h2>
                     <div className="row gy-4 pb-5" style={{

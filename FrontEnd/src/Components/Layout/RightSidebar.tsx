@@ -39,6 +39,7 @@ const RightSidebar: React.FC = () => {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden", // Empêche le débordement du contenu
+        fontFamily: "League Spartan, sans-serif",
       }}
     >
       {/* Titre fixe en haut */}
@@ -63,18 +64,22 @@ const RightSidebar: React.FC = () => {
             {events.map((event, index) => (
               <div 
               key={index} 
-              className="card border-0 rounded-4 text-white bg-dark bg-gradient shadow-sm"
+              className="card border-0 rounded-4 text-white  shadow-sm"
+              style={{
+                backgroundColor: "#d9d9d9",
+                marginBottom: "10px",
+              }}
               >
               <div className="card-body">
-                <h5 className="card-title fw-bold">{event.sport}</h5>
-                <p className="card-text mb-1">
+                <h5 className="card-title fw-bold text-dark">{event.sport}</h5>
+                <p className="card-text mb-1 text-dark">
                 {new Date(event.date_debut).toLocaleDateString('fr-FR', { 
                   day: 'numeric', 
                   month: 'long', 
                   year: 'numeric' 
                 })}
                 </p>
-                <p className="card-text">{event.localisation}</p>
+                <p className="card-text text-dark">{event.localisation}</p>
               </div>
               </div>
             ))}

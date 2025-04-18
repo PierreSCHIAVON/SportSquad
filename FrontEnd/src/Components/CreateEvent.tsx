@@ -75,7 +75,7 @@ const CreateEvent = () => {
     };
 
     return (
-        <div className="container-fluid py-4" style={{ backgroundColor: '#FFFFFF', height: '100vh', overflowY: "auto" }}>
+        <div className="container-fluid py-4" style={{ backgroundColor: '#FFFFFF', height: '100vh', overflowY: "auto", fontFamily: 'League Spartan, sans-serif' }}>
             <div className="row justify-content-center">
                 <div className="col-lg-8 col-md-10 col-12">
                     <div className="text-center mb-3">

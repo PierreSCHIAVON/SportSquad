@@ -89,7 +89,7 @@ const SearchPage: React.FC = () => {
     };
 
     return (
-        <div className="container py-4">
+        <div className="container py-4"  style={{ fontFamily: 'League Spartan, sans-serif' }}>
             <h1 className="text-center fw-bold display-4 mb-5">Rechercher un événement</h1>
 
             <div className="row g-3 mb-5 justify-content-center">

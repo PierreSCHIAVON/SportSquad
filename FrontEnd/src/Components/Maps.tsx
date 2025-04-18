@@ -101,7 +101,7 @@ const Maps = () => {
         : defaultPosition;
     
     return (
-        <div className="maps-container p-4">
+        <div className="maps-container p-4"  style={{ fontFamily: 'League Spartan, sans-serif' }}>
             <h2 className="mb-4 mt-4">Retrouver des événements autour de chez vous</h2>
             
             {userPosition && (
